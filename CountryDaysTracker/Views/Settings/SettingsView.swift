@@ -44,10 +44,6 @@ struct SettingsViewContent: View {
                 // Debug Section (only in DEBUG builds)
                 #if DEBUG
                 Section("Debug") {
-                    Button("Insert Test Interval") {
-                        insertTestInterval()
-                    }
-                    
                     NavigationLink("View Logs") { LogsView() }
                     
                     Button("Reset Onboarding", role: .destructive) {
@@ -98,21 +94,6 @@ struct SettingsViewContent: View {
         }
     }
     
-    private func insertTestInterval() {
-        let repository = StayRepository(modelContext: modelContext)
-        
-        // Insert a test interval for today
-        let now = Date()
-        repository.insertInterval(
-            countryCode: "AE", // UAE for quick visual check
-            entryAt: now.addingTimeInterval(-3600), // 1 hour ago
-            exitAt: now,
-            source: "test",
-            confidence: 1.0
-        )
-        
-        print("✅ Test interval inserted")
-    }
 }
 
 struct SettingsView: View {
