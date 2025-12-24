@@ -1,0 +1,23 @@
+{
+  "/Users/mark1ns0n/projects/m/country-tracker/CountryDaysTracker/Views/Debug/LogsView.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/LogsView.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/LogsView.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/LogsView.dia",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/LogsView.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/LogsView.swiftdeps"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/CountryDaysTracker/Views/Stats/StatsView.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/StatsView.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/StatsView.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/StatsView.dia",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/StatsView.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/StatsView.swiftdeps"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  }
+}

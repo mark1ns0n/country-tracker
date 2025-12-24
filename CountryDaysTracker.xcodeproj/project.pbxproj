@@ -1,0 +1,814 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 70;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		014C549EB56BAB8AADF156F3 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B62B3CE198E77FB8C049B9E /* WelcomeView.swift */; };
+		0374B303902AF71D1D9B40D2 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1656B24A3371D2A95CB7FF /* RootTabView.swift */; };
+		12FF14B5F73A7FBFCB6FE014 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AC5A55E99FD013A3609B2F /* DateUtils.swift */; };
+		1770F6AB0C95C0A7DA533003 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C34B46D06F92079D94A47EE /* SettingsView.swift */; };
+		18FDD7294C917081338C2D6A /* world_countries_simplified.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 262BC1D95C26368B76CE7091 /* world_countries_simplified.geojson */; };
+		250E2059A31ABDF27D39D609 /* CountryDaysTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02041774C0272978916AAA7 /* CountryDaysTrackerApp.swift */; };
+		2993FE432772BF413755CEBE /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F33E0578F3B351FAF91D1 /* StatsViewModel.swift */; };
+		392710D8A96F59BF0318CF17 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56D7BA0F29E61202EB37058 /* MapViewModel.swift */; };
+		452B5505E68D9ACA668E3A91 /* StayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19279D08200AA02A921CED8 /* StayRepository.swift */; };
+		465D5A2CAA791DF1FE8E810C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB8D4883179B40F61BC406FD /* Assets.xcassets */; };
+		540DE7A8D4A36CB7893A5743 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE4A512F4DF501B063849BB /* ContentView.swift */; };
+		58C1AC6728102A5E8A17559A /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A659140A980913B09FEE5A /* LogsView.swift */; };
+		68F9E5A84DD18478EDC1300C /* DayCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DACD663822F141FD04F44DC /* DayCellView.swift */; };
+		7145A478B88C7FA5A0DA0C46 /* StayEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D675624024E34ABA24F72 /* StayEngine.swift */; };
+		8938D83F0A3665F486E22A74 /* LocationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4379D162896B67A10774801F /* LocationPermissionView.swift */; };
+		8EB096DBF505C07BE4378E77 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29767D29D7972AE38E817A6 /* StatsView.swift */; };
+		944D04DA03DB8CBA740802BF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC7383BF2DC6097BBA8E9FF /* Preview Assets.xcassets */; };
+		A7021CFADE8B6142C4177CBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D547CCB24D296DBCF851B5DE /* Foundation.framework */; };
+		A961D33D947B061BF1F79C78 /* VisitedCountriesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FC3DCAFB1875C8E4D645CF /* VisitedCountriesMapView.swift */; };
+		ABCF9064D822BFCF805093C0 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4653F17B6EDBACE38F4762E /* LocationService.swift */; };
+		AC9906F0F441E53B1C12A8F9 /* LocationEventLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF65995A88C143AB0940288 /* LocationEventLog.swift */; };
+		AEE67E0CC198656E381C1DB7 /* DayDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */; };
+		BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */; };
+		BB8D043812378CA5D321B1F5 /* CalendarAndMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD030F4024D9C173DE3577 /* CalendarAndMapView.swift */; };
+		BF31C8C42EF47CA100EABAFB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */; };
+		BF31C8C62EF47CA100EABAFB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C52EF47CA100EABAFB /* SwiftUI.framework */; };
+		BF31C8D72EF47CA300EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C3C2A1B3D9B42AFA112B8100 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB355BA35426727931BC2E /* CalendarViewModel.swift */; };
+		C5C7F2204AC5B1FCB4A24CBF /* RangeSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C50394C777E1CBE2F6AE /* RangeSelectionViewModel.swift */; };
+		D432E0C3513F8AB1898EA653 /* StayInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E801724D73A78F83B34103 /* StayInterval.swift */; };
+		DEC73C2412A0F0DC8B4367D2 /* CountryGeometryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F50E151ACB0298A20D554 /* CountryGeometryStore.swift */; };
+		EF1E4DC5EA7F9F7DA751DC63 /* AggregationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C96B689DDFCD90322974A0 /* AggregationService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BF31C8D52EF47CA300EABAFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD03884EECAB438B7D6F966B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF31C8C12EF47CA100EABAFB;
+			remoteInfo = group.com.mark1ns0n.countrydaystrackerExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BF31C8D82EF47CA300EABAFB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BF31C8D72EF47CA300EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
+		0DDD030F4024D9C173DE3577 /* CalendarAndMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarAndMapView.swift; sourceTree = "<group>"; };
+		0FF65995A88C143AB0940288 /* LocationEventLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationEventLog.swift; sourceTree = "<group>"; };
+		13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DayDetailsSheet.swift; sourceTree = "<group>"; };
+		262BC1D95C26368B76CE7091 /* world_countries_simplified.geojson */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = world_countries_simplified.geojson; sourceTree = "<group>"; };
+		26C96B689DDFCD90322974A0 /* AggregationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AggregationService.swift; sourceTree = "<group>"; };
+		2DACD663822F141FD04F44DC /* DayCellView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DayCellView.swift; sourceTree = "<group>"; };
+		41E801724D73A78F83B34103 /* StayInterval.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayInterval.swift; sourceTree = "<group>"; };
+		4379D162896B67A10774801F /* LocationPermissionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationPermissionView.swift; sourceTree = "<group>"; };
+		50E0C50394C777E1CBE2F6AE /* RangeSelectionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RangeSelectionViewModel.swift; sourceTree = "<group>"; };
+		57FC3DCAFB1875C8E4D645CF /* VisitedCountriesMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VisitedCountriesMapView.swift; sourceTree = "<group>"; };
+		72AC5A55E99FD013A3609B2F /* DateUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		77AB355BA35426727931BC2E /* CalendarViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		8BB6688638C8E5669F73A265 /* AggregationServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AggregationServiceTests.swift; sourceTree = "<group>"; };
+		8C1656B24A3371D2A95CB7FF /* RootTabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		8C99FB120103C2526C108A3C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B62B3CE198E77FB8C049B9E /* WelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		9C34B46D06F92079D94A47EE /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A02041774C0272978916AAA7 /* CountryDaysTrackerApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CountryDaysTrackerApp.swift; sourceTree = "<group>"; };
+		B798AA18A17AAF133B035DD3 /* StayEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayEngineTests.swift; sourceTree = "<group>"; };
+		B99D675624024E34ABA24F72 /* StayEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayEngine.swift; sourceTree = "<group>"; };
+		BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = group.com.mark1ns0n.countrydaystrackerExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BF31C8C52EF47CA100EABAFB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		BF31C8DD2EF47DA000EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = group.com.mark1ns0n.countrydaystrackerExtension.entitlements; sourceTree = "<group>"; };
+		BF31C8EC2EF47FF600EABAFB /* CountryTrackerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTrackerWidget.swift; sourceTree = "<group>"; };
+		BF31C8ED2EF47FF600EABAFB /* CountryTrackerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTrackerWidgetBundle.swift; sourceTree = "<group>"; };
+		BF31C8EE2EF47FF600EABAFB /* WidgetDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataService.swift; sourceTree = "<group>"; };
+		BF31C8F32EF4813000EABAFB /* YearStatsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearStatsWidget.swift; sourceTree = "<group>"; };
+		BF3302362EF5E79B001691C3 /* StayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StayRepository.swift; path = CountryDaysTracker/Storage/StayRepository.swift; sourceTree = "<group>"; };
+		BFD370D02EF5E9F300C78653 /* StayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StayRepository.swift; path = CountryDaysTracker/Storage/StayRepository.swift; sourceTree = "<group>"; };
+		BFD370D22EF5EA8300C78653 /* AggregationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AggregationService.swift; path = CountryDaysTracker/Services/AggregationService.swift; sourceTree = "<group>"; };
+		C19279D08200AA02A921CED8 /* StayRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayRepository.swift; sourceTree = "<group>"; };
+		C56D7BA0F29E61202EB37058 /* MapViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		CB8D4883179B40F61BC406FD /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CBE4A512F4DF501B063849BB /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CC0E4B68B829102BA9E805DA /* CountryDaysTracker.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = CountryDaysTracker.entitlements; sourceTree = "<group>"; };
+		D4653F17B6EDBACE38F4762E /* LocationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		D547CCB24D296DBCF851B5DE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		E29767D29D7972AE38E817A6 /* StatsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		E49F50E151ACB0298A20D554 /* CountryGeometryStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CountryGeometryStore.swift; sourceTree = "<group>"; };
+		E93FB816D74EFFB4AA02A78A /* CountryDaysTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryDaysTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED8F33E0578F3B351FAF91D1 /* StatsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
+		F1A659140A980913B09FEE5A /* LogsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
+		FEC7383BF2DC6097BBA8E9FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BF31C8DB2EF47CA300EABAFB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (BF31C8DB2EF47CA300EABAFB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = group.com.mark1ns0n.countrydaystracker; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		31E8B8FCC1ADF0A8CB42CF89 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7021CFADE8B6142C4177CBF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF31C8BF2EF47CA100EABAFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF31C8C62EF47CA100EABAFB /* SwiftUI.framework in Frameworks */,
+				BF31C8C42EF47CA100EABAFB /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04296EC0F72C910E6E7775CB /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				9B62B3CE198E77FB8C049B9E /* WelcomeView.swift */,
+				4379D162896B67A10774801F /* LocationPermissionView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		18F3ADB18F3242E88244DA4D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				77AB355BA35426727931BC2E /* CalendarViewModel.swift */,
+				50E0C50394C777E1CBE2F6AE /* RangeSelectionViewModel.swift */,
+				C56D7BA0F29E61202EB37058 /* MapViewModel.swift */,
+				ED8F33E0578F3B351FAF91D1 /* StatsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		30D739721915B0A1E4E5C2C7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A02041774C0272978916AAA7 /* CountryDaysTrackerApp.swift */,
+				CBE4A512F4DF501B063849BB /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		328FB5B17A44B4184C7923ED /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				8C1656B24A3371D2A95CB7FF /* RootTabView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		334F40CF80B73DDB052C1F23 /* CountryDaysTracker */ = {
+			isa = PBXGroup;
+			children = (
+				CB8D4883179B40F61BC406FD /* Assets.xcassets */,
+				EA40701F697D8F71554A81B0 /* Preview Content */,
+				30D739721915B0A1E4E5C2C7 /* App */,
+				CA49A5E4EFDC0EE867A211BE /* Models */,
+				CCB92A3C7881225A3307F118 /* Services */,
+				9C040BA215B6BB3CD04E8402 /* Storage */,
+				AD78CABC9F2452A3FAEA42E7 /* Engines */,
+				18F3ADB18F3242E88244DA4D /* ViewModels */,
+				B4663A534E8BCBB9677B6961 /* Views */,
+				69238B296708B2568A43A00E /* Resources */,
+				57B95017AD2E86084041E76B /* Tests */,
+				CC0E4B68B829102BA9E805DA /* CountryDaysTracker.entitlements */,
+				8C99FB120103C2526C108A3C /* Info.plist */,
+			);
+			path = CountryDaysTracker;
+			sourceTree = "<group>";
+		};
+		42DBA7402794941F4808718C /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				57FC3DCAFB1875C8E4D645CF /* VisitedCountriesMapView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		4536B3D8A05907993AE08D1E /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				0DDD030F4024D9C173DE3577 /* CalendarAndMapView.swift */,
+				0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */,
+				2DACD663822F141FD04F44DC /* DayCellView.swift */,
+				13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		57B95017AD2E86084041E76B /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B798AA18A17AAF133B035DD3 /* StayEngineTests.swift */,
+				8BB6688638C8E5669F73A265 /* AggregationServiceTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		5DFD9252E3DAF0F16DD2AB16 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D547CCB24D296DBCF851B5DE /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		69238B296708B2568A43A00E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				262BC1D95C26368B76CE7091 /* world_countries_simplified.geojson */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		83D48CF2C54F6A43AB50CF85 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5DFD9252E3DAF0F16DD2AB16 /* iOS */,
+				BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */,
+				BF31C8C52EF47CA100EABAFB /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88DD33AE46323ADC406B354A = {
+			isa = PBXGroup;
+			children = (
+				BFD370D22EF5EA8300C78653 /* AggregationService.swift */,
+				BF3302362EF5E79B001691C3 /* StayRepository.swift */,
+				BFD370D02EF5E9F300C78653 /* StayRepository.swift */,
+				BF31C8EF2EF47FF600EABAFB /* CountryTrackerWidget */,
+				BF31C8DD2EF47DA000EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.entitlements */,
+				BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */,
+				A89D055587F36B84CE7CA6F7 /* Products */,
+				83D48CF2C54F6A43AB50CF85 /* Frameworks */,
+				334F40CF80B73DDB052C1F23 /* CountryDaysTracker */,
+			);
+			sourceTree = "<group>";
+		};
+		8B258DB1BD27C9B2CB77B485 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				BF31C8F32EF4813000EABAFB /* YearStatsWidget.swift */,
+				E29767D29D7972AE38E817A6 /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		9C040BA215B6BB3CD04E8402 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				C19279D08200AA02A921CED8 /* StayRepository.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		A89D055587F36B84CE7CA6F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E93FB816D74EFFB4AA02A78A /* CountryDaysTracker.app */,
+				BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD78CABC9F2452A3FAEA42E7 /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				B99D675624024E34ABA24F72 /* StayEngine.swift */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
+		B4663A534E8BCBB9677B6961 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				04296EC0F72C910E6E7775CB /* Onboarding */,
+				328FB5B17A44B4184C7923ED /* Root */,
+				C99674721700A384CA637DFA /* Settings */,
+				4536B3D8A05907993AE08D1E /* Calendar */,
+				42DBA7402794941F4808718C /* Map */,
+				8B258DB1BD27C9B2CB77B485 /* Stats */,
+				E69A7426C0E76200639E064C /* Debug */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BF31C8EF2EF47FF600EABAFB /* CountryTrackerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				BF31C8EC2EF47FF600EABAFB /* CountryTrackerWidget.swift */,
+				BF31C8ED2EF47FF600EABAFB /* CountryTrackerWidgetBundle.swift */,
+				BF31C8EE2EF47FF600EABAFB /* WidgetDataService.swift */,
+			);
+			path = CountryTrackerWidget;
+			sourceTree = "<group>";
+		};
+		C99674721700A384CA637DFA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9C34B46D06F92079D94A47EE /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		CA49A5E4EFDC0EE867A211BE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				41E801724D73A78F83B34103 /* StayInterval.swift */,
+				0FF65995A88C143AB0940288 /* LocationEventLog.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CCB92A3C7881225A3307F118 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D4653F17B6EDBACE38F4762E /* LocationService.swift */,
+				72AC5A55E99FD013A3609B2F /* DateUtils.swift */,
+				26C96B689DDFCD90322974A0 /* AggregationService.swift */,
+				E49F50E151ACB0298A20D554 /* CountryGeometryStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E69A7426C0E76200639E064C /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				F1A659140A980913B09FEE5A /* LogsView.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		EA40701F697D8F71554A81B0 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FEC7383BF2DC6097BBA8E9FF /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4E3E2AE2BFA29A05149CB17C /* CountryDaysTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF3C3EA8F324A0A976D866E3 /* Build configuration list for PBXNativeTarget "CountryDaysTracker" */;
+			buildPhases = (
+				D701B5241149F657C1B041EA /* Sources */,
+				31E8B8FCC1ADF0A8CB42CF89 /* Frameworks */,
+				41F2016A83F21AAE3FCEA359 /* Resources */,
+				BF31C8D82EF47CA300EABAFB /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BF31C8D62EF47CA300EABAFB /* PBXTargetDependency */,
+			);
+			name = CountryDaysTracker;
+			productName = CountryDaysTracker;
+			productReference = E93FB816D74EFFB4AA02A78A /* CountryDaysTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF31C8DC2EF47CA300EABAFB /* Build configuration list for PBXNativeTarget "group.com.mark1ns0n.countrydaystrackerExtension" */;
+			buildPhases = (
+				BF31C8BE2EF47CA100EABAFB /* Sources */,
+				BF31C8BF2EF47CA100EABAFB /* Frameworks */,
+				BF31C8C02EF47CA100EABAFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */,
+			);
+			name = group.com.mark1ns0n.countrydaystrackerExtension;
+			packageProductDependencies = (
+			);
+			productName = group.com.mark1ns0n.countrydaystrackerExtension;
+			productReference = BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD03884EECAB438B7D6F966B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					BF31C8C12EF47CA100EABAFB = {
+						CreatedOnToolsVersion = 26.2;
+					};
+				};
+			};
+			buildConfigurationList = 6CF4B73B0A19E3DB69987C18 /* Build configuration list for PBXProject "CountryDaysTracker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 88DD33AE46323ADC406B354A;
+			productRefGroup = A89D055587F36B84CE7CA6F7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E3E2AE2BFA29A05149CB17C /* CountryDaysTracker */,
+				BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		41F2016A83F21AAE3FCEA359 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				465D5A2CAA791DF1FE8E810C /* Assets.xcassets in Resources */,
+				944D04DA03DB8CBA740802BF /* Preview Assets.xcassets in Resources */,
+				18FDD7294C917081338C2D6A /* world_countries_simplified.geojson in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF31C8C02EF47CA100EABAFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BF31C8BE2EF47CA100EABAFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D701B5241149F657C1B041EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				452B5505E68D9ACA668E3A91 /* StayRepository.swift in Sources */,
+				250E2059A31ABDF27D39D609 /* CountryDaysTrackerApp.swift in Sources */,
+				540DE7A8D4A36CB7893A5743 /* ContentView.swift in Sources */,
+				D432E0C3513F8AB1898EA653 /* StayInterval.swift in Sources */,
+				AC9906F0F441E53B1C12A8F9 /* LocationEventLog.swift in Sources */,
+				7145A478B88C7FA5A0DA0C46 /* StayEngine.swift in Sources */,
+				ABCF9064D822BFCF805093C0 /* LocationService.swift in Sources */,
+				014C549EB56BAB8AADF156F3 /* WelcomeView.swift in Sources */,
+				8938D83F0A3665F486E22A74 /* LocationPermissionView.swift in Sources */,
+				0374B303902AF71D1D9B40D2 /* RootTabView.swift in Sources */,
+				1770F6AB0C95C0A7DA533003 /* SettingsView.swift in Sources */,
+				12FF14B5F73A7FBFCB6FE014 /* DateUtils.swift in Sources */,
+				BB8D043812378CA5D321B1F5 /* CalendarAndMapView.swift in Sources */,
+				EF1E4DC5EA7F9F7DA751DC63 /* AggregationService.swift in Sources */,
+				BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */,
+				68F9E5A84DD18478EDC1300C /* DayCellView.swift in Sources */,
+				AEE67E0CC198656E381C1DB7 /* DayDetailsSheet.swift in Sources */,
+				C3C2A1B3D9B42AFA112B8100 /* CalendarViewModel.swift in Sources */,
+				DEC73C2412A0F0DC8B4367D2 /* CountryGeometryStore.swift in Sources */,
+				C5C7F2204AC5B1FCB4A24CBF /* RangeSelectionViewModel.swift in Sources */,
+				392710D8A96F59BF0318CF17 /* MapViewModel.swift in Sources */,
+				A961D33D947B061BF1F79C78 /* VisitedCountriesMapView.swift in Sources */,
+				2993FE432772BF413755CEBE /* StatsViewModel.swift in Sources */,
+				8EB096DBF505C07BE4378E77 /* StatsView.swift in Sources */,
+				58C1AC6728102A5E8A17559A /* LogsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BF31C8D62EF47CA300EABAFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */;
+			targetProxy = BF31C8D52EF47CA300EABAFB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		24B041D9D6E2F494D5A755FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4A3DCF89F4EFE3AF62021906 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4E251F6DE1A24813BF0A4A10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = CountryDaysTracker/CountryDaysTracker.entitlements;
+				DEVELOPMENT_ASSET_PATHS = "\"CountryDaysTracker/Preview Content\"";
+				DEVELOPMENT_TEAM = AQ6FA64322;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = CountryDaysTracker/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CountryTracker;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5B3E6F4891EEB9FA7243FD2B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = CountryDaysTracker/CountryDaysTracker.entitlements;
+				DEVELOPMENT_ASSET_PATHS = "\"CountryDaysTracker/Preview Content\"";
+				DEVELOPMENT_TEAM = AQ6FA64322;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = CountryDaysTracker/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CountryTracker;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BF31C8D92EF47CA300EABAFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = group.com.mark1ns0n.countrydaystrackerExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AQ6FA64322;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = group.com.mark1ns0n.countrydaystracker/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = group.com.mark1ns0n.countrydaystracker;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev.CountryTrackerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BF31C8DA2EF47CA300EABAFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = group.com.mark1ns0n.countrydaystrackerExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AQ6FA64322;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = group.com.mark1ns0n.countrydaystracker/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = group.com.mark1ns0n.countrydaystracker;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev.CountryTrackerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6CF4B73B0A19E3DB69987C18 /* Build configuration list for PBXProject "CountryDaysTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A3DCF89F4EFE3AF62021906 /* Debug */,
+				24B041D9D6E2F494D5A755FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF31C8DC2EF47CA300EABAFB /* Build configuration list for PBXNativeTarget "group.com.mark1ns0n.countrydaystrackerExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF31C8D92EF47CA300EABAFB /* Debug */,
+				BF31C8DA2EF47CA300EABAFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF3C3EA8F324A0A976D866E3 /* Build configuration list for PBXNativeTarget "CountryDaysTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B3E6F4891EEB9FA7243FD2B /* Release */,
+				4E251F6DE1A24813BF0A4A10 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DD03884EECAB438B7D6F966B /* Project object */;
+}

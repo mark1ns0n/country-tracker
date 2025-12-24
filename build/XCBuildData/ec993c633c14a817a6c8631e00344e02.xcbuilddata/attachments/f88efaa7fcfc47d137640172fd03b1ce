@@ -1,0 +1,79 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group.com.mark1ns0n.countrydaystrackerExtension-primary.dia",
+    "emit-module-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group.com.mark1ns0n.countrydaystrackerExtension-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group.com.mark1ns0n.countrydaystrackerExtension-primary-emit-module.dia",
+    "pch" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group.com.mark1ns0n.countrydaystrackerExtension-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group.com.mark1ns0n.countrydaystrackerExtension-primary.swiftdeps"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/group.com.mark1ns0n.countrydaystracker/AppIntent.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/AppIntent~partial.swiftmodule"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/group.com.mark1ns0n.countrydaystracker/WidgetDataService.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/WidgetDataService~partial.swiftmodule"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/group.com.mark1ns0n.countrydaystracker/group_com_mark1ns0n_countrydaystracker.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystracker~partial.swiftmodule"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/group.com.mark1ns0n.countrydaystracker/group_com_mark1ns0n_countrydaystrackerBundle.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerBundle~partial.swiftmodule"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/group.com.mark1ns0n.countrydaystracker/group_com_mark1ns0n_countrydaystrackerControl.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerControl~partial.swiftmodule"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/group.com.mark1ns0n.countrydaystracker/group_com_mark1ns0n_countrydaystrackerLiveActivity.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.dia",
+    "index-unit-output-path" : "/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.o",
+    "llvm-bc" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.bc",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity.swiftdeps",
+    "swiftmodule" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/group.com.mark1ns0n.countrydaystrackerExtension.build/Objects-normal/arm64/group_com_mark1ns0n_countrydaystrackerLiveActivity~partial.swiftmodule"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "/Users/mark1ns0n/projects/m/country-tracker/CountryDaysTracker/Services/CountryGeometryStore.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CountryGeometryStore.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CountryGeometryStore.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CountryGeometryStore.dia",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CountryGeometryStore.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CountryGeometryStore.swiftdeps"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/CountryDaysTracker/ViewModels/CalendarViewModel.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CalendarViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CalendarViewModel.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CalendarViewModel.dia",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CalendarViewModel.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/CalendarViewModel.swiftdeps"
+  },
+  "/Users/mark1ns0n/projects/m/country-tracker/CountryDaysTracker/ViewModels/RangeSelectionViewModel.swift" : {
+    "const-values" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/RangeSelectionViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/RangeSelectionViewModel.d",
+    "diagnostics" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/RangeSelectionViewModel.dia",
+    "object" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/RangeSelectionViewModel.o",
+    "swift-dependencies" : "/Users/mark1ns0n/projects/m/country-tracker/build/CountryDaysTracker.build/Debug-iphoneos/CountryDaysTracker.build/Objects-normal/arm64/RangeSelectionViewModel.swiftdeps"
+  }
+}
