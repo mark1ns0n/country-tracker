@@ -45,7 +45,8 @@ struct AggregationService {
         
         // Find all intervals that overlap with this day
         let overlappingIntervals = intervals.filter { interval in
-            let intervalEnd = interval.exitAt ?? Date.distantFuture
+            // For open intervals (exitAt == nil), use current date as end
+            let intervalEnd = interval.exitAt ?? Date()
             return interval.entryAt <= dayEnd && intervalEnd >= dayStart
         }
         
@@ -126,7 +127,8 @@ struct AggregationService {
     /// Get set of all visited countries in a date range
     func visitedCountries(range: ClosedRange<Date>, intervals: [StayInterval]) -> Set<String> {
         let filtered = intervals.filter { interval in
-            let intervalEnd = interval.exitAt ?? Date.distantFuture
+            // For open intervals (exitAt == nil), use current date as end
+            let intervalEnd = interval.exitAt ?? Date()
             return interval.entryAt <= range.upperBound && intervalEnd >= range.lowerBound
         }
         
