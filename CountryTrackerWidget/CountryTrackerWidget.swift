@@ -57,14 +57,8 @@ struct CountryTrackerWidgetEntryView: View {
         switch widgetFamily {
         case .systemSmall:
             SmallWidgetView(stats: entry.stats)
-        case .systemMedium:
-            MediumWidgetView(stats: entry.stats)
-        case .systemLarge:
-            LargeWidgetView(stats: entry.stats)
-        case .accessoryRectangular:
-            AccessoryWidgetView(stats: entry.stats)
         default:
-            MediumWidgetView(stats: entry.stats)
+            SmallWidgetView(stats: entry.stats)
         }
     }
 }
@@ -87,162 +81,6 @@ struct SmallWidgetView: View {
         }
         .padding(8)
         .background(Color(.systemBackground))
-    }
-}
-
-// MARK: - Medium Widget (2x3)
-struct MediumWidgetView: View {
-    let stats: CountryYearStats
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("This Year")
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                    Text("Stats")
-                        .font(.headline)
-                }
-                
-                Spacer()
-                
-                Text(yearString())
-                    .font(.caption)
-                    .foregroundColor(.gray)
-            }
-            
-            HStack(spacing: 8) {
-                StatCard(icon: "🌍", value: "\(stats.countriesCount)", label: "Countries")
-                StatCard(icon: "📅", value: "\(stats.totalDays)", label: "Days")
-                StatCard(icon: "✈️", value: "\(stats.tripsCount)", label: "Trips")
-            }
-            
-            Divider()
-            
-            if !stats.topCountries.isEmpty {
-                VStack(spacing: 6) {
-                    HStack {
-                        Text("Top 3")
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    
-                    ForEach(stats.topCountries.prefix(3)) { country in
-                        HStack(spacing: 8) {
-                            Text(flagEmoji(for: country.code))
-                                .font(.body)
-                            Text(country.code)
-                                .font(.caption)
-                                .fontWeight(.medium)
-                            Spacer()
-                            Text("\(country.days)d")
-                                .font(.caption2)
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-            }
-        }
-        .padding(12)
-        .background(Color(.systemBackground))
-    }
-}
-
-// MARK: - Large Widget (2x4)
-struct LargeWidgetView: View {
-    let stats: CountryYearStats
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("This Year")
-                        .font(.headline)
-                    Text(yearString())
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-                Spacer()
-            }
-            
-            HStack(spacing: 8) {
-                StatCard(icon: "🌍", value: "\(stats.countriesCount)", label: "Countries")
-                StatCard(icon: "📅", value: "\(stats.totalDays)", label: "Days")
-                StatCard(icon: "✈️", value: "\(stats.tripsCount)", label: "Trips")
-            }
-            
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Top Countries")
-                    .font(.headline)
-                
-                ForEach(stats.topCountries.prefix(3)) { country in
-                    HStack(spacing: 10) {
-                        Text(flagEmoji(for: country.code))
-                            .font(.title3)
-                        
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(country.code)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            Text("\(country.days) days")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        
-                        Spacer()
-                        
-                        ProgressView(value: Double(country.days), total: Double(stats.topCountries.first?.days ?? 1))
-                            .tint(.blue)
-                            .frame(maxWidth: 60)
-                    }
-                    .padding(8)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                }
-            }
-            
-            Spacer()
-        }
-        .padding(12)
-        .background(Color(.systemBackground))
-    }
-}
-
-// MARK: - Accessory Widget
-struct AccessoryWidgetView: View {
-    let stats: CountryYearStats
-    
-    var body: some View {
-        HStack(spacing: 4) {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Countries")
-                    .font(.caption2)
-                Text("\(stats.countriesCount)")
-                    .font(.headline)
-            }
-            
-            Divider()
-            
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Days")
-                    .font(.caption2)
-                Text("\(stats.totalDays)")
-                    .font(.headline)
-            }
-            
-            Divider()
-            
-            if let top = stats.topCountries.first {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Top")
-                        .font(.caption2)
-                    Text(top.code)
-                        .font(.headline)
-                }
-            }
-        }
     }
 }
 
@@ -323,7 +161,7 @@ struct CountryTrackerWidget: Widget {
         ) { entry in
             CountryTrackerWidgetEntryView(entry: entry)
         }
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular])
+        .supportedFamilies([.systemSmall])
         .configurationDisplayName("Travel Stats")
         .description("Your travel statistics for this year")
     }
@@ -338,44 +176,6 @@ struct ConfigurationAppIntent: AppIntent, Identifiable, WidgetConfigurationInten
 }
 
 #Preview("Small", as: .systemSmall) {
-    CountryTrackerWidget()
-} timeline: {
-    CountryTrackerEntry(
-        date: Date(),
-        stats: CountryYearStats(
-            countriesCount: 12,
-            totalDays: 45,
-            tripsCount: 5,
-            topCountries: [
-                CountryData(code: "FR", days: 15),
-                CountryData(code: "IT", days: 12),
-                CountryData(code: "ES", days: 10)
-            ],
-            lastUpdated: Date()
-        )
-    )
-}
-
-#Preview("Medium", as: .systemMedium) {
-    CountryTrackerWidget()
-} timeline: {
-    CountryTrackerEntry(
-        date: Date(),
-        stats: CountryYearStats(
-            countriesCount: 12,
-            totalDays: 45,
-            tripsCount: 5,
-            topCountries: [
-                CountryData(code: "FR", days: 15),
-                CountryData(code: "IT", days: 12),
-                CountryData(code: "ES", days: 10)
-            ],
-            lastUpdated: Date()
-        )
-    )
-}
-
-#Preview("Large", as: .systemLarge) {
     CountryTrackerWidget()
 } timeline: {
     CountryTrackerEntry(

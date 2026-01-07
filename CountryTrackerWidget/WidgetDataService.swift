@@ -48,7 +48,7 @@ struct CountryData: Codable, Identifiable {
 class WidgetDataService {
     static let shared = WidgetDataService()
     private let userDefaults = UserDefaults(suiteName: "group.com.mark1ns0n.countrydaystracker")
-    private let statsKey = "yearStatsWidget"
+    private let statsKey = "yearStatsWidget_v2" // keep in sync with app target
     
     func saveStats(_ stats: CountryYearStats) {
         do {

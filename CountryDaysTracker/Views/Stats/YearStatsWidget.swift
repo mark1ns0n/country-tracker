@@ -24,10 +24,10 @@ struct YearStatsWidget: View {
             // Header
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("This Year")
+                    Text("Last 365 Days")
                         .font(.title2)
                         .fontWeight(.bold)
-                    Text(currentYearString())
+                    Text("365d")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
@@ -107,12 +107,8 @@ struct YearStatsWidget: View {
     private func refreshStats() {
         let calendar = Calendar.current
         let now = Date()
-        let year = calendar.component(.year, from: now)
-        
-        // Get range for current year
-        let yearStart = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) ?? now
-        let yearEnd = calendar.date(from: DateComponents(year: year, month: 12, day: 31)) ?? now
-        let range = yearStart...yearEnd
+        let start = calendar.date(byAdding: .day, value: -364, to: now) ?? now
+        let range = DateUtils.startOfDay(start, calendar: calendar)...DateUtils.endOfDay(now, calendar: calendar)
         
         // Fetch intervals
         let intervals = repository.fetchIntervals(in: range)
@@ -121,7 +117,7 @@ struct YearStatsWidget: View {
         let daysCounts = AggregationService().daysByCountry(range: range, intervals: intervals)
         let countries = AggregationService().visitedCountries(range: range, intervals: intervals)
         
-        let totalDays = daysCounts.values.reduce(0, +)
+        let totalDays = AggregationService().uniqueDaysWithCountry(range: range, intervals: intervals)
         let tripsCount = calculateTripsCount(intervals: intervals)
         
         stats = YearStats(
@@ -167,10 +163,6 @@ struct YearStatsWidget: View {
         return s
     }
     
-    private func currentYearString() -> String {
-        let year = Calendar.current.component(.year, from: Date())
-        return String(year)
-    }
 }
 
 struct YearStatCard: View {

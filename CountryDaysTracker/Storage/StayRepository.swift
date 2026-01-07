@@ -54,7 +54,7 @@ struct CountryData: Codable, Identifiable {
 
 private enum WidgetStatsDefaults {
     static let suiteName = "group.com.mark1ns0n.countrydaystracker"
-    static let statsKey = "yearStatsWidget"
+    static let statsKey = "yearStatsWidget_v2"
 }
 
 @MainActor
@@ -204,7 +204,7 @@ class StayRepository {
         let daysCounts = aggregation.daysByCountry(range: range, intervals: intervals)
         let countries = aggregation.visitedCountries(range: range, intervals: intervals)
         
-        let totalDays = daysCounts.values.reduce(0, +)
+        let totalDays = aggregation.uniqueDaysWithCountry(range: range, intervals: intervals)
         let tripsCount = intervals.filter { $0.exitAt != nil }.count
         
         let topCountries = daysCounts
@@ -225,7 +225,7 @@ class StayRepository {
     private func lastYearRange() -> ClosedRange<Date> {
         let calendar = Calendar.current
         let now = Date()
-        let start = calendar.date(byAdding: .year, value: -1, to: now) ?? now
+        let start = calendar.date(byAdding: .day, value: -364, to: now) ?? now
         let rangeStart = DateUtils.startOfDay(start, calendar: calendar)
         let rangeEnd = DateUtils.endOfDay(now, calendar: calendar)
         return rangeStart...rangeEnd

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 
 struct CountryYearStats: Codable {
     let countriesCount: Int
@@ -48,12 +49,13 @@ struct CountryData: Codable, Identifiable {
 class WidgetDataService {
     static let shared = WidgetDataService()
     private let userDefaults = UserDefaults(suiteName: "group.com.mark1ns0n.countrydaystracker")
-    private let statsKey = "yearStatsWidget"
+    private let statsKey = "yearStatsWidget_v2" // bumped to drop old overcounted cache
     
     func saveStats(_ stats: CountryYearStats) {
         do {
             let data = try JSONEncoder().encode(stats)
             userDefaults?.set(data, forKey: statsKey)
+            WidgetCenter.shared.reloadAllTimelines()
         } catch {
             print("Failed to save widget stats: \(error)")
         }
