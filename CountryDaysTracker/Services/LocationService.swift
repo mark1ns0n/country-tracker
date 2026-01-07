@@ -104,7 +104,8 @@ class LocationService: NSObject, ObservableObject {
         print("📍 Processing location: \(location.coordinate.latitude), \(location.coordinate.longitude) acc=\(location.horizontalAccuracy) from \(source)")
         
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
-            Task { @MainActor in
+            guard let self = self else { return }
+            Task { @MainActor [weak self] in
                 guard let self = self else { return }
                 if let error = error {
                     print("❌ Geocoding error: \(error.localizedDescription)")
