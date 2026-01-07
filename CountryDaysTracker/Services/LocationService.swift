@@ -99,8 +99,8 @@ class LocationService: NSObject, ObservableObject {
     
     // MARK: - Private Methods
     
-    /// Reverse geocode location to get country code
-    private func processLocation(_ location: CLLocation, source: String) {
+    /// Reverse geocode location to get country code with retry mechanism
+    private func processLocation(_ location: CLLocation, source: String, retryCount: Int = 0) {
         print("📍 Processing location: \(location.coordinate.latitude), \(location.coordinate.longitude) acc=\(location.horizontalAccuracy) from \(source)")
         
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
@@ -109,12 +109,30 @@ class LocationService: NSObject, ObservableObject {
                 guard let self = self else { return }
                 if let error = error {
                     print("❌ Geocoding error: \(error.localizedDescription)")
+                    
+                    // Retry logic for network errors (max 3 attempts)
+                    let nsError = error as NSError
+                    let shouldRetry = (nsError.domain == kCLErrorDomain && 
+                                      nsError.code == CLError.network.rawValue) ||
+                                     nsError.code == CLError.geocodeFoundNoResult.rawValue
+                    
+                    if shouldRetry && retryCount < 3 {
+                        let delay = pow(2.0, Double(retryCount)) // Exponential backoff: 1s, 2s, 4s
+                        print("🔄 Retrying geocoding in \(delay)s (attempt \(retryCount + 1)/3)")
+                        
+                        Task { @MainActor in
+                            try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                            self.processLocation(location, source: source, retryCount: retryCount + 1)
+                        }
+                        return
+                    }
+                    
                     self.repository.appendLog(
                         latitude: location.coordinate.latitude,
                         longitude: location.coordinate.longitude,
                         source: source,
                         accepted: false,
-                        note: "Geocoding error: \(error.localizedDescription)"
+                        note: "Geocoding error after \(retryCount) retries: \(error.localizedDescription)"
                     )
                     return
                 }
