@@ -81,6 +81,13 @@ class StayRepository {
     
     // MARK: - StayInterval Methods
     
+    /// Validate ISO A2 country code format
+    private func isValidCountryCode(_ code: String) -> Bool {
+        // ISO A2 codes are exactly 2 uppercase letters
+        let pattern = "^[A-Z]{2}$"
+        return code.range(of: pattern, options: .regularExpression) != nil
+    }
+    
     /// Fetch the currently open interval (where exitAt is nil)
     func fetchOpenInterval() -> StayInterval? {
         let descriptor = FetchDescriptor<StayInterval>(
@@ -127,8 +134,15 @@ class StayRepository {
         source: String,
         confidence: Double
     ) {
+        // Validate country code before inserting
+        let normalizedCode = countryCode.uppercased()
+        guard isValidCountryCode(normalizedCode) else {
+            print("⚠️ Invalid country code rejected: '\(countryCode)'")
+            return
+        }
+        
         let interval = StayInterval(
-            countryCode: countryCode,
+            countryCode: normalizedCode,
             entryAt: entryAt,
             exitAt: exitAt,
             source: source,
