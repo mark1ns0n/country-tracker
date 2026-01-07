@@ -20,7 +20,18 @@ struct CountryDaysTrackerApp: App {
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            // Log error and try in-memory fallback
+            print("❌ Failed to create persistent ModelContainer: \(error)")
+            print("⚠️ Falling back to in-memory storage")
+            
+            // Attempt in-memory fallback
+            do {
+                let fallbackConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+                return try ModelContainer(for: schema, configurations: [fallbackConfig])
+            } catch {
+                // If even in-memory fails, this is a critical error
+                fatalError("Critical: Could not create any ModelContainer (persistent or in-memory): \(error)")
+            }
         }
     }()
     
