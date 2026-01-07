@@ -91,19 +91,6 @@ struct SmallWidgetView: View {
     }
 }
 
-// MARK: - Helper Views
-// MARK: - Helpers
-func flagEmoji(for iso: String) -> String {
-    let upper = iso.uppercased()
-    guard upper.count == 2 else { return "🏳️" }
-    let base: UInt32 = 127397
-    var s = ""
-    for scalar in upper.unicodeScalars {
-        if let u = UnicodeScalar(base + scalar.value) { s.append(String(u)) }
-    }
-    return s
-}
-
 // MARK: - Widget Definition
 struct CountryTrackerWidget: Widget {
     let kind: String = "CountryTrackerWidget"

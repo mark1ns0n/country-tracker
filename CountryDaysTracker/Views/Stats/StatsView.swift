@@ -56,17 +56,6 @@ struct StatsView: View {
             refresh()
         }
     }
-    
-    private func flagEmoji(for iso: String) -> String {
-        let upper = iso.uppercased()
-        guard upper.count == 2 else { return "🏳️" }
-        let base: UInt32 = 127397
-        var s = ""
-        for scalar in upper.unicodeScalars {
-            if let u = UnicodeScalar(base + scalar.value) { s.append(String(u)) }
-        }
-        return s
-    }
 
     private func refresh() {
         let repo = StayRepository(modelContext: modelContext)
