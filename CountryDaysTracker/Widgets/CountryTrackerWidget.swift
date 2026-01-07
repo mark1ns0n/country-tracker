@@ -34,8 +34,8 @@ struct CountryTrackerWidgetProvider: AppIntentTimelineProvider {
         let stats = WidgetDataService.shared.loadStats() ?? placeholder(in: context).stats
         let entry = CountryTrackerEntry(date: Date(), stats: stats)
         
-        // Update every hour
-        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        // Update every hour - use safe date calculation
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date().addingTimeInterval(3600)
         return Timeline(entries: [entry], policy: .after(nextUpdate))
     }
     
