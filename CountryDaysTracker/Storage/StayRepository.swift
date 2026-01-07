@@ -57,9 +57,23 @@ private enum WidgetStatsDefaults {
     static let statsKey = "yearStatsWidget_v2"
 }
 
+private actor WidgetRefreshCoordinator {
+    private var refreshTask: Task<Void, Never>?
+    
+    func scheduleRefresh(_ operation: @escaping @Sendable () -> Void) {
+        refreshTask?.cancel()
+        refreshTask = Task {
+            try? await Task.sleep(nanoseconds: 100_000_000) // 100ms debounce
+            guard !Task.isCancelled else { return }
+            operation()
+        }
+    }
+}
+
 @MainActor
 class StayRepository {
     private let modelContext: ModelContext
+    private let widgetRefreshCoordinator = WidgetRefreshCoordinator()
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -125,7 +139,13 @@ class StayRepository {
         
         do {
             try modelContext.save()
-            refreshWidgetStatsForLastYear()
+            Task {
+                await widgetRefreshCoordinator.scheduleRefresh { [weak self] in
+                    Task { @MainActor in
+                        self?.refreshWidgetStatsForLastYear()
+                    }
+                }
+            }
             NotificationCenter.default.post(name: .stayIntervalsDidChange, object: nil)
         } catch {
             print("Error inserting interval: \(error)")
@@ -144,7 +164,13 @@ class StayRepository {
                 interval.exitAt = exitAt
                 interval.updatedAt = Date()
                 try modelContext.save()
-                refreshWidgetStatsForLastYear()
+                Task {
+                    await widgetRefreshCoordinator.scheduleRefresh { [weak self] in
+                        Task { @MainActor in
+                            self?.refreshWidgetStatsForLastYear()
+                        }
+                    }
+                }
                 NotificationCenter.default.post(name: .stayIntervalsDidChange, object: nil)
             }
         } catch {
