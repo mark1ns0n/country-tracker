@@ -113,18 +113,8 @@
 		FEC7383BF2DC6097BBA8E9FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		BF31C8DB2EF47CA300EABAFB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (BF31C8DB2EF47CA300EABAFB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = group.com.mark1ns0n.countrydaystracker; sourceTree = "<group>"; };
+		BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = group.com.mark1ns0n.countrydaystracker; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
