@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'group.com.mark1ns0n.countrydaystrackerExtension' in project 'CountryDaysTracker' (no dependencies)

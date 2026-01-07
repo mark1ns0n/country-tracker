@@ -1,4 +1,0 @@
-Target dependency graph (2 targets)
-Target 'CountryDaysTracker' in project 'CountryDaysTracker'
-➜ Explicit dependency on target 'group.com.mark1ns0n.countrydaystrackerExtension' in project 'CountryDaysTracker'
-Target 'group.com.mark1ns0n.countrydaystrackerExtension' in project 'CountryDaysTracker' (no dependencies)
