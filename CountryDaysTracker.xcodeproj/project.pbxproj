@@ -13,7 +13,6 @@
 		1770F6AB0C95C0A7DA533003 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C34B46D06F92079D94A47EE /* SettingsView.swift */; };
 		18FDD7294C917081338C2D6A /* world_countries_simplified.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 262BC1D95C26368B76CE7091 /* world_countries_simplified.geojson */; };
 		250E2059A31ABDF27D39D609 /* CountryDaysTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02041774C0272978916AAA7 /* CountryDaysTrackerApp.swift */; };
-		2993FE432772BF413755CEBE /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F33E0578F3B351FAF91D1 /* StatsViewModel.swift */; };
 		392710D8A96F59BF0318CF17 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56D7BA0F29E61202EB37058 /* MapViewModel.swift */; };
 		452B5505E68D9ACA668E3A91 /* StayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19279D08200AA02A921CED8 /* StayRepository.swift */; };
 		465D5A2CAA791DF1FE8E810C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB8D4883179B40F61BC406FD /* Assets.xcassets */; };
@@ -31,23 +30,24 @@
 		AEE67E0CC198656E381C1DB7 /* DayDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */; };
 		BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */; };
 		BB8D043812378CA5D321B1F5 /* CalendarAndMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD030F4024D9C173DE3577 /* CalendarAndMapView.swift */; };
-		BF31C8C42EF47CA100EABAFB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */; };
-		BF31C8C62EF47CA100EABAFB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C52EF47CA100EABAFB /* SwiftUI.framework */; };
-		BF31C8D72EF47CA300EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BFF0C3532F0EE638009EDD98 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */; };
+		BFF0C3542F0EE638009EDD98 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C52EF47CA100EABAFB /* SwiftUI.framework */; };
+		BFF0C3652F0EE639009EDD98 /* CountryTrackerWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BFF0C3522F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C3C2A1B3D9B42AFA112B8100 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB355BA35426727931BC2E /* CalendarViewModel.swift */; };
 		C5C7F2204AC5B1FCB4A24CBF /* RangeSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C50394C777E1CBE2F6AE /* RangeSelectionViewModel.swift */; };
 		D432E0C3513F8AB1898EA653 /* StayInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E801724D73A78F83B34103 /* StayInterval.swift */; };
 		DEC73C2412A0F0DC8B4367D2 /* CountryGeometryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F50E151ACB0298A20D554 /* CountryGeometryStore.swift */; };
 		EF1E4DC5EA7F9F7DA751DC63 /* AggregationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C96B689DDFCD90322974A0 /* AggregationService.swift */; };
+		F0E1D2C3B4A5968712345679 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E1D2C3B4A5968712345678 /* StringExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BF31C8D52EF47CA300EABAFB /* PBXContainerItemProxy */ = {
+		BFF0C3632F0EE639009EDD98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD03884EECAB438B7D6F966B /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = BF31C8C12EF47CA100EABAFB;
-			remoteInfo = group.com.mark1ns0n.countrydaystrackerExtension;
+			remoteGlobalIDString = BFF0C3512F0EE638009EDD98;
+			remoteInfo = CountryTrackerWidgetExtensionExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -58,7 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BF31C8D72EF47CA300EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex in Embed Foundation Extensions */,
+				BFF0C3652F0EE639009EDD98 /* CountryTrackerWidgetExtensionExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,7 +87,6 @@
 		A02041774C0272978916AAA7 /* CountryDaysTrackerApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CountryDaysTrackerApp.swift; sourceTree = "<group>"; };
 		B798AA18A17AAF133B035DD3 /* StayEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayEngineTests.swift; sourceTree = "<group>"; };
 		B99D675624024E34ABA24F72 /* StayEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayEngine.swift; sourceTree = "<group>"; };
-		BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = group.com.mark1ns0n.countrydaystrackerExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		BF31C8C52EF47CA100EABAFB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		BF31C8DD2EF47DA000EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = group.com.mark1ns0n.countrydaystrackerExtension.entitlements; sourceTree = "<group>"; };
@@ -98,6 +97,7 @@
 		BF3302362EF5E79B001691C3 /* StayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StayRepository.swift; path = CountryDaysTracker/Storage/StayRepository.swift; sourceTree = "<group>"; };
 		BFD370D02EF5E9F300C78653 /* StayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StayRepository.swift; path = CountryDaysTracker/Storage/StayRepository.swift; sourceTree = "<group>"; };
 		BFD370D22EF5EA8300C78653 /* AggregationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AggregationService.swift; path = CountryDaysTracker/Services/AggregationService.swift; sourceTree = "<group>"; };
+		BFF0C3522F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CountryTrackerWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19279D08200AA02A921CED8 /* StayRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayRepository.swift; sourceTree = "<group>"; };
 		C56D7BA0F29E61202EB37058 /* MapViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		CB8D4883179B40F61BC406FD /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,13 +108,23 @@
 		E29767D29D7972AE38E817A6 /* StatsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		E49F50E151ACB0298A20D554 /* CountryGeometryStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CountryGeometryStore.swift; sourceTree = "<group>"; };
 		E93FB816D74EFFB4AA02A78A /* CountryDaysTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryDaysTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED8F33E0578F3B351FAF91D1 /* StatsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		F1A659140A980913B09FEE5A /* LogsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
 		FEC7383BF2DC6097BBA8E9FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F0E1D2C3B4A5968712345678 /* StringExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BFF0C3682F0EE639009EDD98 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BFF0C3512F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = group.com.mark1ns0n.countrydaystracker; sourceTree = "<group>"; };
+		BFF0C3552F0EE638009EDD98 /* CountryTrackerWidgetExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (BFF0C3682F0EE639009EDD98 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CountryTrackerWidgetExtension; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,12 +136,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BF31C8BF2EF47CA100EABAFB /* Frameworks */ = {
+		BFF0C34F2F0EE638009EDD98 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF31C8C62EF47CA100EABAFB /* SwiftUI.framework in Frameworks */,
-				BF31C8C42EF47CA100EABAFB /* WidgetKit.framework in Frameworks */,
+				BFF0C3542F0EE638009EDD98 /* SwiftUI.framework in Frameworks */,
+				BFF0C3532F0EE638009EDD98 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +163,6 @@
 				77AB355BA35426727931BC2E /* CalendarViewModel.swift */,
 				50E0C50394C777E1CBE2F6AE /* RangeSelectionViewModel.swift */,
 				C56D7BA0F29E61202EB37058 /* MapViewModel.swift */,
-				ED8F33E0578F3B351FAF91D1 /* StatsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -183,6 +192,7 @@
 				30D739721915B0A1E4E5C2C7 /* App */,
 				CA49A5E4EFDC0EE867A211BE /* Models */,
 				CCB92A3C7881225A3307F118 /* Services */,
+				F0E1D2C3B4A596871234567A /* Utils */,
 				9C040BA215B6BB3CD04E8402 /* Storage */,
 				AD78CABC9F2452A3FAEA42E7 /* Engines */,
 				18F3ADB18F3242E88244DA4D /* ViewModels */,
@@ -257,7 +267,7 @@
 				BFD370D02EF5E9F300C78653 /* StayRepository.swift */,
 				BF31C8EF2EF47FF600EABAFB /* CountryTrackerWidget */,
 				BF31C8DD2EF47DA000EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.entitlements */,
-				BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */,
+				BFF0C3552F0EE638009EDD98 /* CountryTrackerWidgetExtension */,
 				A89D055587F36B84CE7CA6F7 /* Products */,
 				83D48CF2C54F6A43AB50CF85 /* Frameworks */,
 				334F40CF80B73DDB052C1F23 /* CountryDaysTracker */,
@@ -285,7 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				E93FB816D74EFFB4AA02A78A /* CountryDaysTracker.app */,
-				BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */,
+				BFF0C3522F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -350,6 +360,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		F0E1D2C3B4A596871234567A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F0E1D2C3B4A5968712345678 /* StringExtensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		E69A7426C0E76200639E064C /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,33 +399,33 @@
 			buildRules = (
 			);
 			dependencies = (
-				BF31C8D62EF47CA300EABAFB /* PBXTargetDependency */,
+				BFF0C3642F0EE639009EDD98 /* PBXTargetDependency */,
 			);
 			name = CountryDaysTracker;
 			productName = CountryDaysTracker;
 			productReference = E93FB816D74EFFB4AA02A78A /* CountryDaysTracker.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */ = {
+		BFF0C3512F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BF31C8DC2EF47CA300EABAFB /* Build configuration list for PBXNativeTarget "group.com.mark1ns0n.countrydaystrackerExtension" */;
+			buildConfigurationList = BFF0C3692F0EE639009EDD98 /* Build configuration list for PBXNativeTarget "CountryTrackerWidgetExtensionExtension" */;
 			buildPhases = (
-				BF31C8BE2EF47CA100EABAFB /* Sources */,
-				BF31C8BF2EF47CA100EABAFB /* Frameworks */,
-				BF31C8C02EF47CA100EABAFB /* Resources */,
+				BFF0C34E2F0EE638009EDD98 /* Sources */,
+				BFF0C34F2F0EE638009EDD98 /* Frameworks */,
+				BFF0C3502F0EE638009EDD98 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				BF31C8C72EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystracker */,
+				BFF0C3552F0EE638009EDD98 /* CountryTrackerWidgetExtension */,
 			);
-			name = group.com.mark1ns0n.countrydaystrackerExtension;
+			name = CountryTrackerWidgetExtensionExtension;
 			packageProductDependencies = (
 			);
-			productName = group.com.mark1ns0n.countrydaystrackerExtension;
-			productReference = BF31C8C22EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.appex */;
+			productName = CountryTrackerWidgetExtensionExtension;
+			productReference = BFF0C3522F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -419,7 +437,7 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					BF31C8C12EF47CA100EABAFB = {
+					BFF0C3512F0EE638009EDD98 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -438,7 +456,7 @@
 			projectRoot = "";
 			targets = (
 				4E3E2AE2BFA29A05149CB17C /* CountryDaysTracker */,
-				BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */,
+				BFF0C3512F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -454,7 +472,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BF31C8C02EF47CA100EABAFB /* Resources */ = {
+		BFF0C3502F0EE638009EDD98 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -464,7 +482,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BF31C8BE2EF47CA100EABAFB /* Sources */ = {
+		BFF0C34E2F0EE638009EDD98 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,6 +505,7 @@
 				0374B303902AF71D1D9B40D2 /* RootTabView.swift in Sources */,
 				1770F6AB0C95C0A7DA533003 /* SettingsView.swift in Sources */,
 				12FF14B5F73A7FBFCB6FE014 /* DateUtils.swift in Sources */,
+				F0E1D2C3B4A5968712345679 /* StringExtensions.swift in Sources */,
 				BB8D043812378CA5D321B1F5 /* CalendarAndMapView.swift in Sources */,
 				EF1E4DC5EA7F9F7DA751DC63 /* AggregationService.swift in Sources */,
 				BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */,
@@ -497,7 +516,6 @@
 				C5C7F2204AC5B1FCB4A24CBF /* RangeSelectionViewModel.swift in Sources */,
 				392710D8A96F59BF0318CF17 /* MapViewModel.swift in Sources */,
 				A961D33D947B061BF1F79C78 /* VisitedCountriesMapView.swift in Sources */,
-				2993FE432772BF413755CEBE /* StatsViewModel.swift in Sources */,
 				8EB096DBF505C07BE4378E77 /* StatsView.swift in Sources */,
 				58C1AC6728102A5E8A17559A /* LogsView.swift in Sources */,
 			);
@@ -506,10 +524,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BF31C8D62EF47CA300EABAFB /* PBXTargetDependency */ = {
+		BFF0C3642F0EE639009EDD98 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BF31C8C12EF47CA100EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension */;
-			targetProxy = BF31C8D52EF47CA300EABAFB /* PBXContainerItemProxy */;
+			target = BFF0C3512F0EE638009EDD98 /* CountryTrackerWidgetExtensionExtension */;
+			targetProxy = BFF0C3632F0EE639009EDD98 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -692,7 +710,7 @@
 			};
 			name = Release;
 		};
-		BF31C8D92EF47CA300EABAFB /* Debug */ = {
+		BFF0C3662F0EE639009EDD98 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -706,10 +724,10 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = group.com.mark1ns0n.countrydaystracker/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = group.com.mark1ns0n.countrydaystracker;
+				INFOPLIST_FILE = CountryTrackerWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CountryTrackerWidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -717,7 +735,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev.CountryTrackerWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev.CountryTrackerWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -735,7 +753,7 @@
 			};
 			name = Debug;
 		};
-		BF31C8DA2EF47CA300EABAFB /* Release */ = {
+		BFF0C3672F0EE639009EDD98 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -749,10 +767,10 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = group.com.mark1ns0n.countrydaystracker/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = group.com.mark1ns0n.countrydaystracker;
+				INFOPLIST_FILE = CountryTrackerWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CountryTrackerWidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -760,7 +778,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev.CountryTrackerWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark1ns0n.countrydays.dev.CountryTrackerWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -790,11 +808,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BF31C8DC2EF47CA300EABAFB /* Build configuration list for PBXNativeTarget "group.com.mark1ns0n.countrydaystrackerExtension" */ = {
+		BFF0C3692F0EE639009EDD98 /* Build configuration list for PBXNativeTarget "CountryTrackerWidgetExtensionExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BF31C8D92EF47CA300EABAFB /* Debug */,
-				BF31C8DA2EF47CA300EABAFB /* Release */,
+				BFF0C3662F0EE639009EDD98 /* Debug */,
+				BFF0C3672F0EE639009EDD98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
