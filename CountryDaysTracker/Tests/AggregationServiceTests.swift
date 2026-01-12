@@ -58,7 +58,7 @@ final class AggregationServiceTests: XCTestCase {
         XCTAssertTrue(set.contains("US") && set.contains("FR"))
     }
 
-    func testDaysByCountryUsesDominantCountry() {
+    func testDaysByCountryCountsAllCountriesOnMixedDay() {
         let calendar = Calendar(identifier: .gregorian)
         let svc = AggregationService(calendar: calendar)
 
@@ -75,12 +75,12 @@ final class AggregationServiceTests: XCTestCase {
         let range = DateUtils.startOfDay(day, calendar: calendar)...DateUtils.endOfDay(day, calendar: calendar)
         let result = svc.daysByCountry(range: range, intervals: intervals)
 
-        XCTAssertEqual(result["RU"], 1, "Country with longer overlap should win the day")
-        XCTAssertNil(result["AE"], "Secondary country should not be double-counted for the same day")
-        XCTAssertEqual(result.values.reduce(0, +), 1)
+        XCTAssertEqual(result["RU"], 1, "A mixed day should count for each country visited")
+        XCTAssertEqual(result["AE"], 1, "A mixed day should count for each country visited")
+        XCTAssertEqual(result.values.reduce(0, +), 2)
     }
 
-    func testDaysByCountryBreaksTiesDeterministically() {
+    func testDaysByCountryKeepsBothCountriesOnSplitDay() {
         let calendar = Calendar(identifier: .gregorian)
         let svc = AggregationService(calendar: calendar)
 
@@ -98,9 +98,9 @@ final class AggregationServiceTests: XCTestCase {
         let range = DateUtils.startOfDay(day, calendar: calendar)...DateUtils.endOfDay(day, calendar: calendar)
         let result = svc.daysByCountry(range: range, intervals: intervals)
 
-        XCTAssertEqual(result["AE"], 1, "Alphabetical order should break ties consistently")
-        XCTAssertNil(result["RU"])
-        XCTAssertEqual(result.values.reduce(0, +), 1)
+        XCTAssertEqual(result["AE"], 1)
+        XCTAssertEqual(result["RU"], 1)
+        XCTAssertEqual(result.values.reduce(0, +), 2)
     }
 
     func testDaysByCountryMatchesUniqueCount() {
@@ -126,6 +126,6 @@ final class AggregationServiceTests: XCTestCase {
         let unique = svc.uniqueDaysWithCountry(range: range, intervals: intervals)
 
         XCTAssertEqual(unique, 3)
-        XCTAssertEqual(byCountry.values.reduce(0, +), 3)
+        XCTAssertEqual(byCountry.values.reduce(0, +), 4, "Mixed days count for each country visited")
     }
 }

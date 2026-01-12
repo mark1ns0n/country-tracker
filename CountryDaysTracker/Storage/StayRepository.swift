@@ -55,6 +55,13 @@ struct CountryData: Codable, Identifiable {
 private enum WidgetStatsDefaults {
     static let suiteName = "group.com.mark1ns0n.countrydaystracker"
     static let statsKey = "yearStatsWidget_v2"
+    static let intervalsKey = "yearStatsWidgetIntervals_v1"
+}
+
+struct WidgetStayInterval: Codable {
+    let countryCode: String
+    let entryAt: Date
+    let exitAt: Date?
 }
 
 private actor WidgetRefreshCoordinator {
@@ -258,8 +265,16 @@ class StayRepository {
             topCountries: topCountries,
             lastUpdated: Date()
         )
-        
-        saveWidgetStats(stats)
+
+        let widgetIntervals = intervals.map {
+            WidgetStayInterval(
+                countryCode: $0.countryCode,
+                entryAt: $0.entryAt,
+                exitAt: $0.exitAt
+            )
+        }
+
+        saveWidgetStats(stats, intervals: widgetIntervals)
     }
     
     private func lastYearRange() -> ClosedRange<Date> {
@@ -271,11 +286,15 @@ class StayRepository {
         return rangeStart...rangeEnd
     }
     
-    private func saveWidgetStats(_ stats: CountryYearStats) {
+    private func saveWidgetStats(_ stats: CountryYearStats, intervals: [WidgetStayInterval]) {
         do {
-            let data = try JSONEncoder().encode(stats)
-            UserDefaults(suiteName: WidgetStatsDefaults.suiteName)?
-                .set(data, forKey: WidgetStatsDefaults.statsKey)
+            let encoder = JSONEncoder()
+            let statsData = try encoder.encode(stats)
+            let intervalsData = try encoder.encode(intervals)
+
+            let defaults = UserDefaults(suiteName: WidgetStatsDefaults.suiteName)
+            defaults?.set(statsData, forKey: WidgetStatsDefaults.statsKey)
+            defaults?.set(intervalsData, forKey: WidgetStatsDefaults.intervalsKey)
             WidgetCenter.shared.reloadAllTimelines()
         } catch {
             print("Failed to save widget stats: \(error)")

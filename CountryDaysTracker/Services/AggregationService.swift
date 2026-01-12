@@ -66,62 +66,47 @@ struct AggregationService {
         }
     }
     
-    /// Pick the country with the largest overlap for a specific day (used to avoid double-counting)
-    private func dominantCountryForDay(_ date: Date, intervals: [StayInterval]) -> String? {
+    /// Map each day in range to all countries visited that day (a day can have multiple countries)
+    private func dayCountries(range: ClosedRange<Date>, intervals: [StayInterval]) -> [Date: Set<String>] {
+        var assignments: [Date: Set<String>] = [:]
         let today = calendar.startOfDay(for: Date())
-        let dayStart = DateUtils.startOfDay(date, calendar: calendar)
-        if dayStart > today {
-            return nil
-        }
-
-        let dayEnd = DateUtils.endOfDay(date, calendar: calendar)
-        var durationByCountry: [String: TimeInterval] = [:]
-
-        for interval in intervals {
-            let overlapStart = max(interval.entryAt, dayStart)
-            let overlapEnd = min(interval.exitAt ?? Date(), dayEnd)
-
-            guard overlapEnd > overlapStart else { continue }
-            durationByCountry[interval.countryCode, default: 0] += overlapEnd.timeIntervalSince(overlapStart)
-        }
-
-        guard !durationByCountry.isEmpty else { return nil }
-
-        return durationByCountry
-            .sorted { lhs, rhs in
-                if lhs.value == rhs.value {
-                    return lhs.key < rhs.key
-                }
-                return lhs.value > rhs.value
-            }
-            .first?
-            .key
-    }
-
-    /// Map each day in range to a single dominant country (one entry per day)
-    private func dayAssignments(range: ClosedRange<Date>, intervals: [StayInterval]) -> [Date: String] {
-        var assignments: [Date: String] = [:]
         let days = DateUtils.daysInRange(range, calendar: calendar)
+        
         for day in days {
-            guard let dominant = dominantCountryForDay(day, intervals: intervals) else { continue }
-            let key = DateUtils.startOfDay(day, calendar: calendar)
-            assignments[key] = dominant
+            let dayStart = DateUtils.startOfDay(day, calendar: calendar)
+            if dayStart > today { continue } // skip future days
+            let dayEnd = DateUtils.endOfDay(day, calendar: calendar)
+            
+            let countriesForDay = intervals
+                .filter { interval in
+                    let intervalEnd = interval.exitAt ?? Date()
+                    return interval.entryAt <= dayEnd && intervalEnd >= dayStart
+                }
+                .map { $0.countryCode }
+            
+            let uniqueCountries = Set(countriesForDay)
+            if !uniqueCountries.isEmpty {
+                assignments[dayStart] = uniqueCountries
+            }
         }
+        
         return assignments
     }
 
-    /// Calculate total days spent in each country within a date range (one country per day)
+    /// Calculate total country-days in the range (a mixed day counts once for each country visited)
     func daysByCountry(range: ClosedRange<Date>, intervals: [StayInterval]) -> [String: Int] {
         var countryDays: [String: Int] = [:]
-        for (_, country) in dayAssignments(range: range, intervals: intervals) {
-            countryDays[country, default: 0] += 1
+        for (_, countries) in dayCountries(range: range, intervals: intervals) {
+            for country in countries {
+                countryDays[country, default: 0] += 1
+            }
         }
         return countryDays
     }
 
-    /// Count unique days with any known country in range (no double-counting for mixed days)
+    /// Count days with at least one known country (mixed days still count once)
     func uniqueDaysWithCountry(range: ClosedRange<Date>, intervals: [StayInterval]) -> Int {
-        dayAssignments(range: range, intervals: intervals).count
+        dayCountries(range: range, intervals: intervals).count
     }
     
     /// Get set of all visited countries in a date range
