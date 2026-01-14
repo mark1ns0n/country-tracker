@@ -18,21 +18,26 @@ struct CalendarMonthView: View {
     private let aggregation = AggregationService()
     
     var body: some View {
-        VStack(spacing: 12) {
-            HStack {
-                Button(action: { moveMonth(by: -1) }) {
-                    Image(systemName: "chevron.left")
+        VStack(spacing: 0) {
+            YearVisitedCountriesWidget()
+            
+            Divider()
+            
+            VStack(spacing: 12) {
+                HStack {
+                    Button(action: { moveMonth(by: -1) }) {
+                        Image(systemName: "chevron.left")
+                    }
+                    Spacer()
+                    Text(monthTitle(currentMonth))
+                        .font(.title3)
+                        .bold()
+                    Spacer()
+                    Button(action: { moveMonth(by: 1) }) {
+                        Image(systemName: "chevron.right")
+                    }
                 }
-                Spacer()
-                Text(monthTitle(currentMonth))
-                    .font(.title3)
-                    .bold()
-                Spacer()
-                Button(action: { moveMonth(by: 1) }) {
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .padding(.horizontal)
+                .padding(.horizontal)
             
             let days = orderedDays()
             let columns = Array(repeating: GridItem(.flexible(), spacing: 6), count: 7)
@@ -50,6 +55,7 @@ struct CalendarMonthView: View {
             }
             .padding(.horizontal)
         }
+    }
         .sheet(isPresented: $showDetails) {
             if let day = selectedDay {
                 DayDetailsSheet(date: day)

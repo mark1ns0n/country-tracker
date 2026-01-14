@@ -16,6 +16,7 @@ struct CalendarAndMapView: View {
     @State private var selectedDay: Date? = nil
     @State private var showDetails: Bool = false
     @State private var overlays: [MKOverlay] = []
+    @State private var highlightedCountries: Set<String> = []
     
     private let calendar = Calendar.current
     private let aggregation = AggregationService()
@@ -65,7 +66,7 @@ struct CalendarAndMapView: View {
             Divider()
             
             // Map - takes all remaining space
-            MapRepresentable(overlays: overlays)
+            MapWebView(visitedCountries: highlightedCountries)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -135,6 +136,7 @@ struct CalendarAndMapView: View {
             }
         }
         overlays = newOverlays
+        highlightedCountries = visited
     }
 }
 
