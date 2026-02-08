@@ -28,6 +28,7 @@ struct VisitedCountriesMapView: View {
             MapWebView(visitedCountries: visitedCountries)
                 .onChange(of: rangeVM.preset) { _ in refresh() }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle("Visited Countries")
         .onAppear { refresh() }
     }

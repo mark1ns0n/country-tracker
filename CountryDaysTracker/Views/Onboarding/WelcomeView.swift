@@ -11,9 +11,7 @@ struct WelcomeView: View {
     @Binding var showOnboarding: Bool
     
     var body: some View {
-        VStack(spacing: 30) {
-            Spacer()
-            
+        VStack(spacing: 24) {
             // Icon
             Image(systemName: "globe.europe.africa.fill")
                 .resizable()
@@ -34,8 +32,6 @@ struct WelcomeView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
             
-            Spacer()
-            
             // Continue button
             Button(action: {
                 showOnboarding = false
@@ -49,8 +45,11 @@ struct WelcomeView: View {
                     .cornerRadius(12)
             }
             .padding(.horizontal, 40)
-            .padding(.bottom, 40)
+            .padding(.top, 12)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.top, 32)
+        .padding(.bottom, 24)
     }
 }
 

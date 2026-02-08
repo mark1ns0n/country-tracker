@@ -69,7 +69,7 @@ struct CalendarAndMapView: View {
             MapWebView(visitedCountries: highlightedCountries)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear { refresh() }
         .onReceive(NotificationCenter.default.publisher(for: .stayIntervalsDidChange)) { _ in
             refresh()

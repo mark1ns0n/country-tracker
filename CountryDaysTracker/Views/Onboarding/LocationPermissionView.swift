@@ -13,9 +13,7 @@ struct LocationPermissionView: View {
     @Binding var didCompleteOnboarding: Bool
     
     var body: some View {
-        VStack(spacing: 30) {
-            Spacer()
-            
+        VStack(spacing: 24) {
             // Icon
             Image(systemName: "location.fill")
                 .resizable()
@@ -49,8 +47,6 @@ struct LocationPermissionView: View {
                 )
             }
             .padding(.horizontal, 40)
-            
-            Spacer()
             
             // Buttons
             VStack(spacing: 15) {
@@ -98,8 +94,11 @@ struct LocationPermissionView: View {
                 }
             }
             .padding(.horizontal, 40)
-            .padding(.bottom, 40)
+            .padding(.top, 12)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.top, 32)
+        .padding(.bottom, 24)
     }
 }
 

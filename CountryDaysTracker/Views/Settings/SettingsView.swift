@@ -62,6 +62,7 @@ struct SettingsViewContent: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationTitle("Settings")
         }
     }

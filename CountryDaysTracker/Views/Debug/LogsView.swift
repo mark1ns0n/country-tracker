@@ -34,6 +34,7 @@ struct LogsView: View {
                 if let note = log.note { Text(note).font(.caption2) }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle("Logs (last 200)")
         .onAppear { refresh() }
         .onReceive(NotificationCenter.default.publisher(for: .stayIntervalsDidChange)) { _ in

@@ -12,8 +12,6 @@ struct CalendarMonthView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var currentMonth: Date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Date())) ?? Date()
     @State private var dayMap: [Date: DayCountryResult] = [:]
-    @State private var selectedDay: Date? = nil
-    @State private var showDetails: Bool = false
     private let calendar = Calendar.current
     private let aggregation = AggregationService()
     
@@ -46,21 +44,12 @@ struct CalendarMonthView: View {
                 ForEach(days.indices, id: \.self) { idx in
                     let day = days[idx]
                     DayCellView(date: day, result: dayMap[day])
-                        .onTapGesture {
-                            guard day != Date.distantPast else { return }
-                            selectedDay = day
-                            showDetails = true
-                        }
                 }
             }
             .padding(.horizontal)
         }
     }
-        .sheet(isPresented: $showDetails) {
-            if let day = selectedDay {
-                DayDetailsSheet(date: day)
-            }
-        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear { refresh() }
         .onReceive(NotificationCenter.default.publisher(for: .stayIntervalsDidChange)) { _ in
             refresh()

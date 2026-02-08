@@ -24,7 +24,6 @@
 		A7021CFADE8B6142C4177CBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D547CCB24D296DBCF851B5DE /* Foundation.framework */; };
 		ABCF9064D822BFCF805093C0 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4653F17B6EDBACE38F4762E /* LocationService.swift */; };
 		AC9906F0F441E53B1C12A8F9 /* LocationEventLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF65995A88C143AB0940288 /* LocationEventLog.swift */; };
-		AEE67E0CC198656E381C1DB7 /* DayDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */; };
 		BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */; };
 		YEARVISIT1234567890ABCDEF /* YearVisitedCountriesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = YEARVISITFIREF234567890ABC /* YearVisitedCountriesWidget.swift */; };
 		BFF0C3532F0EE638009EDD98 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31C8C32EF47CA100EABAFB /* WidgetKit.framework */; };
@@ -65,7 +64,6 @@
 		0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
 		YEARVISITFIREF234567890ABC /* YearVisitedCountriesWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = YearVisitedCountriesWidget.swift; sourceTree = "<group>"; };
 		0FF65995A88C143AB0940288 /* LocationEventLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationEventLog.swift; sourceTree = "<group>"; };
-		13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DayDetailsSheet.swift; sourceTree = "<group>"; };
 		26C96B689DDFCD90322974A0 /* AggregationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AggregationService.swift; sourceTree = "<group>"; };
 		2DACD663822F141FD04F44DC /* DayCellView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DayCellView.swift; sourceTree = "<group>"; };
 		41E801724D73A78F83B34103 /* StayInterval.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StayInterval.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 			children = (
 				0CCC030F4024D9C173DE3576 /* CalendarMonthView.swift */,
 				2DACD663822F141FD04F44DC /* DayCellView.swift */,
-				13B7BC2A0C09416E35DB4043 /* DayDetailsSheet.swift */,
 				YEARVISITFIREF234567890ABC /* YearVisitedCountriesWidget.swift */,
 			);
 			path = Calendar;
@@ -480,7 +477,6 @@
 				EF1E4DC5EA7F9F7DA751DC63 /* AggregationService.swift in Sources */,
 				BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */,
 				68F9E5A84DD18478EDC1300C /* DayCellView.swift in Sources */,
-				AEE67E0CC198656E381C1DB7 /* DayDetailsSheet.swift in Sources */,
 				YEARVISIT1234567890ABCDEF /* YearVisitedCountriesWidget.swift in Sources */,
 				C3C2A1B3D9B42AFA112B8100 /* CalendarViewModel.swift in Sources */,
 				C5C7F2204AC5B1FCB4A24CBF /* RangeSelectionViewModel.swift in Sources */,

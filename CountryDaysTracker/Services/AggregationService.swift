@@ -119,4 +119,41 @@ struct AggregationService {
         
         return Set(filtered.map { $0.countryCode })
     }
+
+    /// Map each day in range to all countries visited that day (a day can have multiple countries)
+    func dayCountriesByDay(range: ClosedRange<Date>, intervals: [StayInterval]) -> [Date: Set<String>] {
+        dayCountries(range: range, intervals: intervals)
+    }
+
+    /// For a target country:
+    /// - increaseInDays: if user arrives there today and stays
+    /// - decreaseInDays: if user does not go there from today
+    func daysUntilChangeForCountry(
+        targetCountry: String,
+        daysInRange: [Date],
+        dayCountries: [Date: Set<String>]
+    ) -> (increaseInDays: Int?, decreaseInDays: Int?) {
+        var firstIncrease: Int? = nil
+        var firstDecrease: Int? = nil
+
+        for (index, day) in daysInRange.enumerated() {
+            let dayStart = DateUtils.startOfDay(day, calendar: calendar)
+            let containsCountry = (dayCountries[dayStart] ?? []).contains(targetCountry)
+
+            // If the dropped day is not target country, arriving to target creates net +1.
+            if firstIncrease == nil && !containsCountry {
+                firstIncrease = index + 1
+            }
+
+            // If the dropped day is target country and no new target day is added, net -1.
+            if firstDecrease == nil && containsCountry {
+                firstDecrease = index + 1
+            }
+            if firstIncrease != nil && firstDecrease != nil {
+                break
+            }
+        }
+
+        return (firstIncrease, firstDecrease)
+    }
 }

@@ -10,7 +10,7 @@ import SwiftData
 
 struct YearVisitedCountriesWidget: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var countryDays: [(code: String, days: Int)] = []
+    @State private var countryDays: [(code: String, days: Int, increaseInDays: Int?, decreaseInDays: Int?)] = []
     
     private let aggregation = AggregationService()
     
@@ -26,6 +26,10 @@ struct YearVisitedCountriesWidget: View {
                     .foregroundStyle(.secondary)
             }
             
+            Text("↑ if arrive there today, ↓ if you do not go there")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
             if countryDays.isEmpty {
                 Text("No countries visited yet")
                     .font(.callout)
@@ -44,10 +48,15 @@ struct YearVisitedCountriesWidget: View {
                                     .fontWeight(.medium)
                             }
                             Spacer()
-                            Text("\(item.days) d")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.secondary)
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text("\(item.days) d")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.secondary)
+                                Text(changeText(increaseInDays: item.increaseInDays, decreaseInDays: item.decreaseInDays))
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                         .padding(.vertical, 12)
                         .padding(.horizontal, 12)
@@ -76,7 +85,33 @@ struct YearVisitedCountriesWidget: View {
         let range = oneYearAgo...Date()
         let intervals = repo.fetchIntervals(in: range)
         let daysByCountry = aggregation.daysByCountry(range: range, intervals: intervals)
-        countryDays = daysByCountry.map { ($0.key, $0.value) }.sorted { $0.days > $1.days }
+        let daysInRange = DateUtils.daysInRange(range)
+        let dayCountries = aggregation.dayCountriesByDay(range: range, intervals: intervals)
+
+        countryDays = daysByCountry
+            .map { code, days in
+                let changes = aggregation.daysUntilChangeForCountry(
+                    targetCountry: code,
+                    daysInRange: daysInRange,
+                    dayCountries: dayCountries
+                )
+                return (
+                    code: code,
+                    days: days,
+                    increaseInDays: changes.increaseInDays,
+                    decreaseInDays: changes.decreaseInDays
+                )
+            }
+            .sorted { $0.days > $1.days }
+    }
+
+    private func changeText(increaseInDays: Int?, decreaseInDays: Int?) -> String {
+        "↑ \(formatDays(increaseInDays))  ↓ \(formatDays(decreaseInDays))"
+    }
+
+    private func formatDays(_ days: Int?) -> String {
+        guard let days else { return "—" }
+        return "in \(days)d"
     }
     
     private func flagEmoji(for isoCountryCode: String) -> String {

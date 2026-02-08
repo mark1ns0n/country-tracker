@@ -48,6 +48,7 @@ struct StatsView: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationTitle("Statistics")
         }
         .onChange(of: rangeVM.preset) { _ in refresh() }
