@@ -10,7 +10,6 @@ import SwiftData
 
 struct ContentView: View {
     @AppStorage("didOnboard") private var didOnboard = false
-    @State private var showWelcome = true
     
     var body: some View {
         if !didOnboard {
@@ -65,17 +64,21 @@ struct MainAppView: View {
                 bootstrapIfNeeded()
                 refreshWidgetStats()
                 // Start location monitoring when app appears
-                if locationService.authorizationStatus == .authorizedAlways ||
-                   locationService.authorizationStatus == .authorizedWhenInUse {
+                if locationService.authorizationStatus == .authorizedAlways {
                     locationService.start()
                     locationService.requestLocation() // seed immediate location
+                } else if locationService.authorizationStatus == .authorizedWhenInUse {
+                    locationService.requestLocation()
                 }
             }
-            .onChange(of: scenePhase) { phase in
+            .onChange(of: scenePhase) { _, phase in
                 // Sync on app open with simple rate limit (15 minutes)
                 if phase == .active {
                     bootstrapIfNeeded()
                     refreshWidgetStats()
+                    if locationService.authorizationStatus == .authorizedAlways && !locationService.isMonitoring {
+                        locationService.start()
+                    }
                     let now = Date()
                     if lastSync == nil || now.timeIntervalSince(lastSync!) > 15 * 60 {
                         locationService.requestLocation()

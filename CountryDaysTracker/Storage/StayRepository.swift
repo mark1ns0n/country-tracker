@@ -12,6 +12,7 @@ import WidgetKit
 extension Notification.Name {
     /// Broadcast when stay intervals are inserted or closed
     static let stayIntervalsDidChange = Notification.Name("stayIntervalsDidChange")
+    static let locationLogsDidChange = Notification.Name("locationLogsDidChange")
 }
 
 struct CountryYearStats: Codable {
@@ -56,6 +57,7 @@ private enum WidgetStatsDefaults {
     static let suiteName = "group.com.mark1ns0n.countrydaystracker"
     static let statsKey = "yearStatsWidget_v2"
     static let intervalsKey = "yearStatsWidgetIntervals_v1"
+    static let widgetKind = "CountryTrackerWidget"
 }
 
 struct WidgetStayInterval: Codable {
@@ -124,9 +126,7 @@ class StayRepository {
         )
         
         do {
-            let result = try modelContext.fetch(descriptor)
-            print("📦 fetchIntervals range=\(startDate)→\(endDate) count=\(result.count)")
-            return result
+            return try modelContext.fetch(descriptor)
         } catch {
             print("Error fetching intervals in range: \(error)")
             return []
@@ -203,6 +203,7 @@ class StayRepository {
     
     /// Append a new location event log
     func appendLog(
+        timestamp: Date = Date(),
         latitude: Double,
         longitude: Double,
         source: String,
@@ -211,6 +212,7 @@ class StayRepository {
         note: String? = nil
     ) {
         let log = LocationEventLog(
+            timestamp: timestamp,
             latitude: latitude,
             longitude: longitude,
             source: source,
@@ -223,6 +225,7 @@ class StayRepository {
         
         do {
             try modelContext.save()
+            NotificationCenter.default.post(name: .locationLogsDidChange, object: nil)
         } catch {
             print("Error appending log: \(error)")
         }
@@ -253,10 +256,11 @@ class StayRepository {
         
         let totalDays = aggregation.uniqueDaysWithCountry(range: range, intervals: intervals)
         let tripsCount = intervals.filter { $0.exitAt != nil }.count
-        
-        let topCountries = daysCounts
-            .map { CountryData(code: $0.key, days: $0.value) }
-            .sorted { $0.days > $1.days }
+
+        let countryData = daysCounts.map { CountryData(code: $0.key, days: $0.value) }
+        let topCountries = countryData.sorted { lhs, rhs in
+            lhs.days == rhs.days ? lhs.code < rhs.code : lhs.days > rhs.days
+        }
         
         let stats = CountryYearStats(
             countriesCount: countries.count,
@@ -278,12 +282,7 @@ class StayRepository {
     }
     
     private func lastYearRange() -> ClosedRange<Date> {
-        let calendar = Calendar.current
-        let now = Date()
-        let start = calendar.date(byAdding: .day, value: -364, to: now) ?? now
-        let rangeStart = DateUtils.startOfDay(start, calendar: calendar)
-        let rangeEnd = DateUtils.endOfDay(now, calendar: calendar)
-        return rangeStart...rangeEnd
+        DateUtils.last365DaysRange()
     }
     
     private func saveWidgetStats(_ stats: CountryYearStats, intervals: [WidgetStayInterval]) {
@@ -295,7 +294,7 @@ class StayRepository {
             let defaults = UserDefaults(suiteName: WidgetStatsDefaults.suiteName)
             defaults?.set(statsData, forKey: WidgetStatsDefaults.statsKey)
             defaults?.set(intervalsData, forKey: WidgetStatsDefaults.intervalsKey)
-            WidgetCenter.shared.reloadAllTimelines()
+            WidgetCenter.shared.reloadTimelines(ofKind: WidgetStatsDefaults.widgetKind)
         } catch {
             print("Failed to save widget stats: \(error)")
         }

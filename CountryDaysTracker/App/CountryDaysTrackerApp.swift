@@ -11,14 +11,8 @@ import SwiftData
 @main
 struct CountryDaysTrackerApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            StayInterval.self,
-            LocationEventLog.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try AppModelSchema.makeContainer(inMemory: false)
         } catch {
             // Log error and try in-memory fallback
             print("❌ Failed to create persistent ModelContainer: \(error)")
@@ -26,8 +20,7 @@ struct CountryDaysTrackerApp: App {
             
             // Attempt in-memory fallback
             do {
-                let fallbackConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-                return try ModelContainer(for: schema, configurations: [fallbackConfig])
+                return try AppModelSchema.makeContainer(inMemory: true)
             } catch {
                 // If even in-memory fails, this is a critical error
                 fatalError("Critical: Could not create any ModelContainer (persistent or in-memory): \(error)")

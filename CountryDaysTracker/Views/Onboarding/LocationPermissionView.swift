@@ -11,6 +11,7 @@ import SwiftData
 struct LocationPermissionView: View {
     @ObservedObject var locationService: LocationService
     @Binding var didCompleteOnboarding: Bool
+    @Environment(\.openURL) private var openURL
     
     var body: some View {
         VStack(spacing: 24) {
@@ -28,7 +29,7 @@ struct LocationPermissionView: View {
             
             // Description
             VStack(spacing: 15) {
-                Text("We need access to your location to:")
+                Text("We use your location to:")
                     .font(.headline)
                 
                 PermissionReasonRow(
@@ -47,6 +48,14 @@ struct LocationPermissionView: View {
                 )
             }
             .padding(.horizontal, 40)
+
+            if locationService.authorizationStatus == .authorizedWhenInUse {
+                Text("Background country tracking requires \"Always\" access. You can continue now, but updates will be limited to times when the app is open.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+            }
             
             // Buttons
             VStack(spacing: 15) {
@@ -76,10 +85,21 @@ struct LocationPermissionView: View {
                             .background(Color.green)
                             .cornerRadius(12)
                     }
+
+                    Button(action: {
+                        didCompleteOnboarding = true
+                    }) {
+                        Text("Continue with Limited Tracking")
+                            .font(.headline)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.secondary)
+                            .cornerRadius(12)
+                    }
                 }
-                
-                if locationService.authorizationStatus == .authorizedAlways ||
-                   locationService.authorizationStatus == .authorizedWhenInUse {
+
+                if locationService.authorizationStatus == .authorizedAlways {
                     Button(action: {
                         didCompleteOnboarding = true
                     }) {
@@ -91,6 +111,15 @@ struct LocationPermissionView: View {
                             .background(Color.blue)
                             .cornerRadius(12)
                     }
+                }
+
+                if locationService.authorizationStatus == .denied ||
+                    locationService.authorizationStatus == .restricted {
+                    Button("Open System Settings") {
+                        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                        openURL(url)
+                    }
+                    .font(.headline)
                 }
             }
             .padding(.horizontal, 40)
@@ -122,8 +151,7 @@ struct PermissionReasonRow: View {
 }
 
 #Preview {
-    // Build a shared in-memory SwiftData context for preview
-    let container = try! ModelContainer(for: StayInterval.self, LocationEventLog.self)
+    let container = try! AppModelSchema.makeContainer(inMemory: true)
     let ctx = ModelContext(container)
     let repo = StayRepository(modelContext: ctx)
     let engine = StayEngine(repository: repo)

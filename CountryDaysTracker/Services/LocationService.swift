@@ -12,30 +12,32 @@ import SwiftData
 @MainActor
 class LocationService: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
-    private let geocoder = CLGeocoder()
+    private var activeGeocoders: [UUID: CLGeocoder] = [:]
     private var stayEngine: StayEngine
     private var repository: StayRepository
     
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var isMonitoring = false
-        // Placeholder support for deferred wiring of shared modelContext
-        static let placeholder: LocationService = {
-            let dummyContainer = try! ModelContainer(for: StayInterval.self, LocationEventLog.self)
-            let dummyRepo = StayRepository(modelContext: ModelContext(dummyContainer))
-            let dummy = LocationService(stayEngine: StayEngine(repository: dummyRepo), repository: dummyRepo)
-            dummy.isPlaceholder = true
-            return dummy
-        }()
-        private(set) var isPlaceholder: Bool = false
-        func adopt(from other: LocationService) {
-            // copy essential state from a real instance
-            self.isPlaceholder = false
-            self.authorizationStatus = other.authorizationStatus
-            self.isMonitoring = other.isMonitoring
-            self.stayEngine = other.stayEngine
-            self.repository = other.repository
-            self.locationManager.delegate = self
-        }
+    
+    // Placeholder support for deferred wiring of shared modelContext
+    static let placeholder: LocationService = {
+        let dummyRepo = LocationService.makePlaceholderRepository()
+        let dummy = LocationService(stayEngine: StayEngine(repository: dummyRepo), repository: dummyRepo)
+        dummy.isPlaceholder = true
+        return dummy
+    }()
+
+    private(set) var isPlaceholder: Bool = false
+
+    func adopt(from other: LocationService) {
+        // Copy essential state from a real instance.
+        self.isPlaceholder = false
+        self.authorizationStatus = other.authorizationStatus
+        self.isMonitoring = other.isMonitoring
+        self.stayEngine = other.stayEngine
+        self.repository = other.repository
+        self.locationManager.delegate = self
+    }
     
     init(stayEngine: StayEngine, repository: StayRepository) {
         self.stayEngine = stayEngine
@@ -43,6 +45,15 @@ class LocationService: NSObject, ObservableObject {
         super.init()
         self.locationManager.delegate = self
         self.authorizationStatus = locationManager.authorizationStatus
+    }
+
+    private static func makePlaceholderRepository() -> StayRepository {
+        do {
+            let container = try AppModelSchema.makeContainer(inMemory: true)
+            return StayRepository(modelContext: ModelContext(container))
+        } catch {
+            fatalError("Critical: Could not create placeholder ModelContainer: \(error)")
+        }
     }
     
     // MARK: - Public Methods
@@ -67,8 +78,8 @@ class LocationService: NSObject, ObservableObject {
     
     /// Start monitoring location changes
     func start() {
-        guard authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse else {
-            print("⚠️ Cannot start monitoring without location permissions")
+        guard authorizationStatus == .authorizedAlways else {
+            print("⚠️ Background monitoring requires Always authorization")
             return
         }
         
@@ -100,13 +111,18 @@ class LocationService: NSObject, ObservableObject {
     // MARK: - Private Methods
     
     /// Reverse geocode location to get country code with retry mechanism
-    private func processLocation(_ location: CLLocation, source: String, retryCount: Int = 0) {
+    private func processLocation(_ location: CLLocation, source: String, timestamp: Date? = nil, retryCount: Int = 0) {
         print("📍 Processing location: \(location.coordinate.latitude), \(location.coordinate.longitude) acc=\(location.horizontalAccuracy) from \(source)")
-        
+        let eventTimestamp = timestamp ?? location.timestamp
+        let requestID = UUID()
+        let geocoder = CLGeocoder()
+        activeGeocoders[requestID] = geocoder
+
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
             guard let self = self else { return }
             Task { @MainActor [weak self] in
                 guard let self = self else { return }
+                defer { self.activeGeocoders.removeValue(forKey: requestID) }
                 if let error = error {
                     print("❌ Geocoding error: \(error.localizedDescription)")
                     
@@ -122,12 +138,13 @@ class LocationService: NSObject, ObservableObject {
                         
                         Task { @MainActor in
                             try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-                            self.processLocation(location, source: source, retryCount: retryCount + 1)
+                            self.processLocation(location, source: source, timestamp: eventTimestamp, retryCount: retryCount + 1)
                         }
                         return
                     }
                     
                     self.repository.appendLog(
+                        timestamp: eventTimestamp,
                         latitude: location.coordinate.latitude,
                         longitude: location.coordinate.longitude,
                         source: source,
@@ -141,6 +158,7 @@ class LocationService: NSObject, ObservableObject {
                       !countryCodeRaw.isEmpty else {
                     print("⚠️ No country code found")
                     self.repository.appendLog(
+                        timestamp: eventTimestamp,
                         latitude: location.coordinate.latitude,
                         longitude: location.coordinate.longitude,
                         source: source,
@@ -153,6 +171,7 @@ class LocationService: NSObject, ObservableObject {
                 print("🏴 Country code: \(countryCode)")
 
                 self.repository.appendLog(
+                    timestamp: eventTimestamp,
                     latitude: location.coordinate.latitude,
                     longitude: location.coordinate.longitude,
                     source: source,
@@ -162,7 +181,7 @@ class LocationService: NSObject, ObservableObject {
 
                 await self.stayEngine.processCountryUpdate(
                     countryCode: countryCode,
-                    at: location.timestamp,
+                    at: eventTimestamp,
                     source: source,
                     confidence: location.horizontalAccuracy > 0 ? 1.0 / location.horizontalAccuracy : 0.0
                 )
@@ -191,12 +210,24 @@ extension LocationService: CLLocationManagerDelegate {
     
     nonisolated func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         Task { @MainActor in
+            let timestamp: Date
+            if visit.arrivalDate != .distantPast {
+                timestamp = visit.arrivalDate
+            } else if visit.departureDate != .distantFuture {
+                timestamp = visit.departureDate
+            } else {
+                timestamp = Date()
+            }
+
             let location = CLLocation(
-                latitude: visit.coordinate.latitude,
-                longitude: visit.coordinate.longitude
+                coordinate: visit.coordinate,
+                altitude: 0,
+                horizontalAccuracy: 0,
+                verticalAccuracy: -1,
+                timestamp: timestamp
             )
             print("🏨 didVisit arrival=\(visit.arrivalDate) departure=\(visit.departureDate)")
-            self.processLocation(location, source: "visit")
+            self.processLocation(location, source: "visit", timestamp: timestamp)
         }
     }
     

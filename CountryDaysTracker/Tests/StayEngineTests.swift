@@ -8,9 +8,10 @@ import XCTest
 import SwiftData
 @testable import CountryDaysTracker
 
+@MainActor
 final class StayEngineTests: XCTestCase {
     func makeRepo() -> StayRepository {
-        let container = try! ModelContainer(for: StayInterval.self, LocationEventLog.self)
+        let container = try! AppModelSchema.makeContainer(inMemory: true)
         let ctx = ModelContext(container)
         return StayRepository(modelContext: ctx)
     }

@@ -39,13 +39,10 @@ struct DateUtils {
         
         return days
     }
-    
-    /// Returns the number of days between two dates (inclusive)
-    static func dayCount(from startDate: Date, to endDate: Date, calendar: Calendar = .current) -> Int {
-        let start = startOfDay(startDate, calendar: calendar)
-        let end = startOfDay(endDate, calendar: calendar)
-        
-        let components = calendar.dateComponents([.day], from: start, to: end)
-        return (components.day ?? 0) + 1 // +1 to include both start and end day
+
+    /// Returns a rolling 365-day range that includes today.
+    static func last365DaysRange(endingAt date: Date = Date(), calendar: Calendar = .current) -> ClosedRange<Date> {
+        let start = calendar.date(byAdding: .day, value: -364, to: date) ?? date
+        return startOfDay(start, calendar: calendar)...endOfDay(date, calendar: calendar)
     }
 }

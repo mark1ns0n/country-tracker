@@ -29,12 +29,12 @@ struct DayCellView: View {
                 if let result = result, date != Date.distantPast {
                     switch result {
                     case .single(let code):
-                        Text(emojiFlag(for: code))
+                        Text(flagEmoji(for: code))
                             .font(.title3)
                     case .mixed(let codes):
                         HStack(spacing: 4) {
                             ForEach(codes.prefix(2), id: \.self) { c in
-                                Text(emojiFlag(for: c))
+                                Text(flagEmoji(for: c))
                                     .font(.headline)
                             }
                         }
@@ -53,18 +53,5 @@ struct DayCellView: View {
         let fmt = DateFormatter()
         fmt.dateFormat = "d"
         return fmt.string(from: date)
-    }
-    
-    private func emojiFlag(for isoCountryCode: String) -> String {
-        let upper = isoCountryCode.uppercased()
-        guard upper.count == 2 else { return "🏳️" }
-        let base: UInt32 = 127397 // Regional Indicator Symbol Letter A
-        var s = ""
-        for scalar in upper.unicodeScalars {
-            if let u = UnicodeScalar(base + scalar.value) {
-                s.append(String(u))
-            }
-        }
-        return s
     }
 }

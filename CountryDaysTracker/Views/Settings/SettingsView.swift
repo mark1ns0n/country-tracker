@@ -11,7 +11,7 @@ import CoreLocation
 
 struct SettingsViewContent: View {
     @ObservedObject var locationService: LocationService
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.openURL) private var openURL
     
     var body: some View {
         NavigationStack {
@@ -27,9 +27,8 @@ struct SettingsViewContent: View {
                     
                     if locationService.authorizationStatus != .authorizedAlways {
                         Button("Open System Settings") {
-                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                UIApplication.shared.open(url)
-                            }
+                            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                            openURL(url)
                         }
                     }
                     
@@ -57,7 +56,7 @@ struct SettingsViewContent: View {
                     HStack {
                         Text("Version")
                         Spacer()
-                        Text("1.0.0")
+                        Text(appVersionText)
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -94,7 +93,14 @@ struct SettingsViewContent: View {
             return .red
         }
     }
-    
+
+    private var appVersionText: String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+
+        guard let build, build != version else { return version }
+        return "\(version) (\(build))"
+    }
 }
 
 struct SettingsView: View {
@@ -106,7 +112,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    let container = try! ModelContainer(for: StayInterval.self, LocationEventLog.self)
+    let container = try! AppModelSchema.makeContainer(inMemory: true)
     let ctx = ModelContext(container)
     let repo = StayRepository(modelContext: ctx)
     let engine = StayEngine(repository: repo)

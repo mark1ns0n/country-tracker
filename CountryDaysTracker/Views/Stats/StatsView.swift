@@ -14,17 +14,8 @@ struct StatsView: View {
     @State private var daysByCountry: [(code: String, days: Int)] = []
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
-                // Year stats widget at the top
-//                ScrollView {
-//                    YearStatsWidget(repository: StayRepository(modelContext: modelContext))
-//                }
-//                .frame(height: 400)
-//                .background(Color(.systemGray6))
-//                
-//                Divider()
-                
                 // Custom range selector
                 VStack(spacing: 8) {
                     Picker("Range", selection: $rangeVM.preset) {
@@ -51,7 +42,7 @@ struct StatsView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationTitle("Statistics")
         }
-        .onChange(of: rangeVM.preset) { _ in refresh() }
+        .onChange(of: rangeVM.preset) { refresh() }
         .onAppear { refresh() }
         .onReceive(NotificationCenter.default.publisher(for: .stayIntervalsDidChange)) { _ in
             refresh()
@@ -62,7 +53,11 @@ struct StatsView: View {
         let repo = StayRepository(modelContext: modelContext)
         let intervals = repo.fetchIntervals(in: rangeVM.range)
         let dict = AggregationService().daysByCountry(range: rangeVM.range, intervals: intervals)
-        daysByCountry = dict.map { ($0.key, $0.value) }.sorted { $0.days > $1.days }
+        daysByCountry = dict
+            .map { ($0.key, $0.value) }
+            .sorted { lhs, rhs in
+                lhs.days == rhs.days ? lhs.code < rhs.code : lhs.days > rhs.days
+            }
     }
 }
 

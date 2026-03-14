@@ -37,7 +37,7 @@ struct LogsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle("Logs (last 200)")
         .onAppear { refresh() }
-        .onReceive(NotificationCenter.default.publisher(for: .stayIntervalsDidChange)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .locationLogsDidChange)) { _ in
             refresh()
         }
     }

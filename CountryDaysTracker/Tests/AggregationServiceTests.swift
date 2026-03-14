@@ -128,4 +128,16 @@ final class AggregationServiceTests: XCTestCase {
         XCTAssertEqual(unique, 3)
         XCTAssertEqual(byCountry.values.reduce(0, +), 4, "Mixed days count for each country visited")
     }
+
+    func testLast365DaysRangeIncludesTodayAndHas365CalendarDays() {
+        let calendar = Calendar(identifier: .gregorian)
+        let referenceDate = calendar.date(from: DateComponents(year: 2026, month: 3, day: 14, hour: 15, minute: 30))!
+
+        let range = DateUtils.last365DaysRange(endingAt: referenceDate, calendar: calendar)
+        let days = DateUtils.daysInRange(range, calendar: calendar)
+
+        XCTAssertEqual(days.count, 365)
+        XCTAssertEqual(range.lowerBound, DateUtils.startOfDay(calendar.date(byAdding: .day, value: -364, to: referenceDate)!, calendar: calendar))
+        XCTAssertEqual(range.upperBound, DateUtils.endOfDay(referenceDate, calendar: calendar))
+    }
 }

@@ -81,8 +81,7 @@ struct YearVisitedCountriesWidget: View {
     
     private func refresh() {
         let repo = StayRepository(modelContext: modelContext)
-        let oneYearAgo = Calendar.current.date(byAdding: .day, value: -365, to: Date()) ?? Date()
-        let range = oneYearAgo...Date()
+        let range = DateUtils.last365DaysRange()
         let intervals = repo.fetchIntervals(in: range)
         let daysByCountry = aggregation.daysByCountry(range: range, intervals: intervals)
         let daysInRange = DateUtils.daysInRange(range)
@@ -102,7 +101,9 @@ struct YearVisitedCountriesWidget: View {
                     decreaseInDays: changes.decreaseInDays
                 )
             }
-            .sorted { $0.days > $1.days }
+            .sorted { lhs, rhs in
+                lhs.days == rhs.days ? lhs.code < rhs.code : lhs.days > rhs.days
+            }
     }
 
     private func changeText(increaseInDays: Int?, decreaseInDays: Int?) -> String {
@@ -112,19 +113,6 @@ struct YearVisitedCountriesWidget: View {
     private func formatDays(_ days: Int?) -> String {
         guard let days else { return "—" }
         return "in \(days)d"
-    }
-    
-    private func flagEmoji(for isoCountryCode: String) -> String {
-        let upper = isoCountryCode.uppercased()
-        guard upper.count == 2 else { return "🏳️" }
-        let base: UInt32 = 127397 // Regional Indicator Symbol Letter A
-        var s = ""
-        for scalar in upper.unicodeScalars {
-            if let u = UnicodeScalar(base + scalar.value) {
-                s.append(String(u))
-            }
-        }
-        return s
     }
 }
 

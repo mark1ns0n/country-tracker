@@ -11,7 +11,6 @@ enum RangePreset: String, CaseIterable, Identifiable {
     case last30 = "Last 30"
     case last90 = "Last 90"
     case thisYear = "This Year"
-    case custom = "Custom"
     
     var id: String { rawValue }
 }
@@ -39,9 +38,6 @@ final class RangeSelectionViewModel: ObservableObject {
         case .thisYear:
             let startOfYear = calendar.date(from: DateComponents(year: calendar.component(.year, from: now), month: 1, day: 1)) ?? now
             range = startOfYear...now
-        case .custom:
-            // Keep current custom range
-            break
         }
     }
 }

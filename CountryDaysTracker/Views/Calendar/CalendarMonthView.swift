@@ -94,13 +94,6 @@ struct CalendarMonthView: View {
         let range = monthDateRange(for: currentMonth)
         let repo = StayRepository(modelContext: modelContext)
         let intervals = repo.fetchIntervals(in: range)
-        print("🗓️ refresh month=", monthTitle(currentMonth), "intervals=", intervals.count)
-        for i in intervals {
-            print("  interval", i.countryCode, i.entryAt, i.exitAt as Any)
-        }
-        if intervals.isEmpty {
-            print("  ⚠️ No intervals found for month range", range)
-        }
         var map: [Date: DayCountryResult] = [:]
         let days = DateUtils.daysInRange(range)
         for day in days {

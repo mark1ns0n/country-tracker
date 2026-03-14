@@ -8,7 +8,11 @@
 import WidgetKit
 import SwiftUI
 
-struct CountryTrackerWidgetProvider: AppIntentTimelineProvider {
+private enum WidgetConstants {
+    static let kind = "CountryTrackerWidget"
+}
+
+struct CountryTrackerWidgetProvider: TimelineProvider {
     func placeholder(in context: Context) -> CountryTrackerEntry {
         CountryTrackerEntry(
             date: Date(),
@@ -26,21 +30,18 @@ struct CountryTrackerWidgetProvider: AppIntentTimelineProvider {
         )
     }
     
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> CountryTrackerEntry {
-        placeholder(in: context)
+    func getSnapshot(in context: Context, completion: @escaping (CountryTrackerEntry) -> Void) {
+        let stats = WidgetDataService.shared.loadStats() ?? placeholder(in: context).stats
+        completion(CountryTrackerEntry(date: Date(), stats: stats))
     }
     
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<CountryTrackerEntry> {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<CountryTrackerEntry>) -> Void) {
         let stats = WidgetDataService.shared.loadStats() ?? placeholder(in: context).stats
         let entry = CountryTrackerEntry(date: Date(), stats: stats)
         
         // Update every hour - use safe date calculation
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date().addingTimeInterval(3600)
-        return Timeline(entries: [entry], policy: .after(nextUpdate))
-    }
-    
-    func recommendations() -> [AppIntentRecommendation<ConfigurationAppIntent>] {
-        []
+        completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
     }
 }
 
@@ -92,12 +93,11 @@ struct SmallWidgetView: View {
 
 // MARK: - Widget Definition
 struct CountryTrackerWidget: Widget {
-    let kind: String = "CountryTrackerWidget"
+    let kind: String = WidgetConstants.kind
     
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(
+        StaticConfiguration(
             kind: kind,
-            intent: ConfigurationAppIntent.self,
             provider: CountryTrackerWidgetProvider()
         ) { entry in
             CountryTrackerWidgetEntryView(entry: entry)
