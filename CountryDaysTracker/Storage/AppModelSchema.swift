@@ -12,6 +12,7 @@ enum AppModelSchema {
         StayInterval.self,
         LocationEventLog.self,
         ResidencyProfile.self,
+        ResidencyRule.self,
     ])
 
     static func makeContainer(inMemory: Bool) throws -> ModelContainer {

@@ -12,6 +12,20 @@ Do not reinterpret the product goal.
 Do not replace the scope with a broader travel-tracker scope.
 Do not introduce alternative domain models unless this document explicitly allows it.
 
+## 1.1 Current Progress
+
+- [x] Step 1. Add `ResidencyProfile`
+- [x] Step 2. Add `ResidencyRule`
+- [ ] Step 3. Add `PresenceDay`
+- [ ] Step 4. Add schema versioning and additive migration support
+
+## 1.2 Current UI Checkpoint
+
+- A first configuration UI now exists in Settings.
+- The app must allow editing `homeCountryCode`.
+- The app must allow selecting the active residency rule.
+- This checkpoint does not satisfy the final dashboard requirement.
+
 ## 2. Primary Product Goal
 
 The application must become a residency risk planner for the user's home country.

@@ -12,7 +12,9 @@ import SwiftData
 struct CountryDaysTrackerApp: App {
     var sharedModelContainer: ModelContainer = {
         do {
-            return try AppModelSchema.makeContainer(inMemory: false)
+            let container = try AppModelSchema.makeContainer(inMemory: false)
+            bootstrapResidencyDefaults(in: container)
+            return container
         } catch {
             // Log error and try in-memory fallback
             print("❌ Failed to create persistent ModelContainer: \(error)")
@@ -20,13 +22,23 @@ struct CountryDaysTrackerApp: App {
             
             // Attempt in-memory fallback
             do {
-                return try AppModelSchema.makeContainer(inMemory: true)
+                let container = try AppModelSchema.makeContainer(inMemory: true)
+                bootstrapResidencyDefaults(in: container)
+                return container
             } catch {
                 // If even in-memory fails, this is a critical error
                 fatalError("Critical: Could not create any ModelContainer (persistent or in-memory): \(error)")
             }
         }
     }()
+
+    private static func bootstrapResidencyDefaults(in container: ModelContainer) {
+        do {
+            _ = try ResidencySettingsRepository(modelContext: ModelContext(container)).ensureDefaults()
+        } catch {
+            print("⚠️ Failed to bootstrap residency defaults: \(error)")
+        }
+    }
     
     var body: some Scene {
         WindowGroup {

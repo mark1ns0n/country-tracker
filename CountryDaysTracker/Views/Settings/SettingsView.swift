@@ -11,11 +11,54 @@ import CoreLocation
 
 struct SettingsViewContent: View {
     @ObservedObject var locationService: LocationService
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.openURL) private var openURL
+    @State private var homeCountryCode = ""
+    @State private var activeRuleIdentifier = ""
+    @State private var availableRules: [ResidencyRuleOption] = []
+    @State private var residencyError: String?
+    @State private var isResidencyLoaded = false
     
     var body: some View {
         NavigationStack {
             List {
+                Section("Residency") {
+                    if isResidencyLoaded {
+                        TextField("Home Country Code", text: $homeCountryCode)
+                            .textInputAutocapitalization(.characters)
+                            .autocorrectionDisabled()
+
+                        Button("Save Home Country") {
+                            saveHomeCountry()
+                        }
+                        .disabled(homeCountryCode.trimmingCharacters(in: .whitespacesAndNewlines).count != 2)
+
+                        Picker("Active Rule", selection: $activeRuleIdentifier) {
+                            ForEach(availableRules) { rule in
+                                Text(rule.title).tag(rule.id)
+                            }
+                        }
+                        .onChange(of: activeRuleIdentifier) { _, newIdentifier in
+                            guard isResidencyLoaded, !newIdentifier.isEmpty else { return }
+                            activateRule(newIdentifier)
+                        }
+
+                        if let selectedRule = availableRules.first(where: { $0.id == activeRuleIdentifier }) {
+                            Text(selectedRule.subtitle)
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                    } else {
+                        ProgressView("Loading residency settings...")
+                    }
+
+                    if let residencyError {
+                        Text(residencyError)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                    }
+                }
+
                 // Location Permission Section
                 Section("Location") {
                     HStack {
@@ -63,6 +106,7 @@ struct SettingsViewContent: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationTitle("Settings")
+            .onAppear { loadResidencySettings() }
         }
     }
     
@@ -101,6 +145,45 @@ struct SettingsViewContent: View {
         guard let build, build != version else { return version }
         return "\(version) (\(build))"
     }
+
+    private func loadResidencySettings() {
+        let repository = ResidencySettingsRepository(modelContext: modelContext)
+
+        do {
+            let profile = try repository.ensureDefaults()
+            let rules = try repository.fetchRuleOptions()
+            homeCountryCode = profile.homeCountryCode
+            activeRuleIdentifier = profile.activeRuleIdentifier ?? ResidencySettingsRepository.defaultRuleIdentifier
+            availableRules = rules
+            residencyError = nil
+            isResidencyLoaded = true
+        } catch {
+            residencyError = "Failed to load residency settings"
+            isResidencyLoaded = true
+        }
+    }
+
+    private func saveHomeCountry() {
+        let repository = ResidencySettingsRepository(modelContext: modelContext)
+
+        do {
+            try repository.updateHomeCountryCode(homeCountryCode)
+            loadResidencySettings()
+        } catch {
+            residencyError = "Failed to save home country"
+        }
+    }
+
+    private func activateRule(_ identifier: String) {
+        let repository = ResidencySettingsRepository(modelContext: modelContext)
+
+        do {
+            try repository.activateRule(identifier: identifier)
+            loadResidencySettings()
+        } catch {
+            residencyError = "Failed to activate rule"
+        }
+    }
 }
 
 struct SettingsView: View {
@@ -114,9 +197,11 @@ struct SettingsView: View {
 #Preview {
     let container = try! AppModelSchema.makeContainer(inMemory: true)
     let ctx = ModelContext(container)
+    _ = try? ResidencySettingsRepository(modelContext: ctx).ensureDefaults()
     let repo = StayRepository(modelContext: ctx)
     let engine = StayEngine(repository: repo)
     return SettingsView(
         locationService: LocationService(stayEngine: engine, repository: repo)
     )
+    .modelContainer(container)
 }
