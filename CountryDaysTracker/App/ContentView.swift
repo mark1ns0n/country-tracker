@@ -62,7 +62,7 @@ struct MainAppView: View {
             .environmentObject(locationService)
             .onAppear {
                 bootstrapIfNeeded()
-                refreshWidgetStats()
+                syncResidencyWidget()
                 // Start location monitoring when app appears
                 if locationService.authorizationStatus == .authorizedAlways {
                     locationService.start()
@@ -75,7 +75,7 @@ struct MainAppView: View {
                 // Sync on app open with simple rate limit (15 minutes)
                 if phase == .active {
                     bootstrapIfNeeded()
-                    refreshWidgetStats()
+                    syncResidencyWidget()
                     if locationService.authorizationStatus == .authorizedAlways && !locationService.isMonitoring {
                         locationService.start()
                     }
@@ -97,9 +97,8 @@ struct MainAppView: View {
         }
     }
     
-    private func refreshWidgetStats() {
-        let repo = StayRepository(modelContext: modelContext)
-        repo.refreshWidgetStatsForLastYear()
+    private func syncResidencyWidget() {
+        ResidencyWidgetSyncService(modelContext: modelContext).sync()
     }
 }
 

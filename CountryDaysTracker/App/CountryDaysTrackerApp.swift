@@ -10,10 +10,12 @@ import SwiftData
 
 @main
 struct CountryDaysTrackerApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+
     var sharedModelContainer: ModelContainer = {
         do {
             let container = try AppModelSchema.makeContainer(inMemory: false)
-            bootstrapResidencyDefaults(in: container)
+            initializePersistentState(in: container)
             return container
         } catch {
             // Log error and try in-memory fallback
@@ -23,7 +25,7 @@ struct CountryDaysTrackerApp: App {
             // Attempt in-memory fallback
             do {
                 let container = try AppModelSchema.makeContainer(inMemory: true)
-                bootstrapResidencyDefaults(in: container)
+                initializePersistentState(in: container)
                 return container
             } catch {
                 // If even in-memory fails, this is a critical error
@@ -32,12 +34,22 @@ struct CountryDaysTrackerApp: App {
         }
     }()
 
-    private static func bootstrapResidencyDefaults(in container: ModelContainer) {
+    private static func initializePersistentState(in container: ModelContainer) {
+        let context = ModelContext(container)
+
         do {
-            _ = try ResidencySettingsRepository(modelContext: ModelContext(container)).ensureDefaults()
+            _ = try ResidencySettingsRepository(modelContext: context).ensureDefaults()
         } catch {
             print("⚠️ Failed to bootstrap residency defaults: \(error)")
         }
+
+        do {
+            _ = try PresenceDayBackfillService(modelContext: context).rebuildFromIntervals()
+        } catch {
+            print("⚠️ Failed to backfill presence days: \(error)")
+        }
+
+        ResidencyWidgetSyncService(modelContext: context).sync()
     }
     
     var body: some Scene {
@@ -45,5 +57,9 @@ struct CountryDaysTrackerApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            Self.initializePersistentState(in: sharedModelContainer)
+        }
     }
 }

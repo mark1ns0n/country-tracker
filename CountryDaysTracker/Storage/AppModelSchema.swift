@@ -5,18 +5,52 @@
 //  Created on 14 March 2026.
 //
 
+import Foundation
 import SwiftData
 
 enum AppModelSchema {
-    static let schema = Schema([
-        StayInterval.self,
-        LocationEventLog.self,
-        ResidencyProfile.self,
-        ResidencyRule.self,
-    ])
+    static let schema = Schema(versionedSchema: AppSchemaV2.self)
 
-    static func makeContainer(inMemory: Bool) throws -> ModelContainer {
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
-        return try ModelContainer(for: schema, configurations: [configuration])
+    static func makeContainer(
+        inMemory: Bool,
+        url: URL? = nil
+    ) throws -> ModelContainer {
+        let configuration = configuration(
+            inMemory: inMemory,
+            url: url
+        )
+        return try ModelContainer(
+            for: schema,
+            migrationPlan: AppMigrationPlan.self,
+            configurations: [configuration]
+        )
+    }
+
+    static func legacySchema() -> Schema {
+        Schema(versionedSchema: AppSchemaV1.self)
+    }
+
+    private static func configuration(
+        inMemory: Bool,
+        url: URL?
+    ) -> ModelConfiguration {
+        if let url {
+            return ModelConfiguration(
+                "CountryDaysTracker",
+                schema: schema,
+                url: url,
+                allowsSave: true,
+                cloudKitDatabase: .none
+            )
+        }
+
+        return ModelConfiguration(
+            "CountryDaysTracker",
+            schema: schema,
+            isStoredInMemoryOnly: inMemory,
+            allowsSave: true,
+            groupContainer: .none,
+            cloudKitDatabase: .none
+        )
     }
 }

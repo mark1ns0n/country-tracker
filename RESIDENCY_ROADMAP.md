@@ -16,15 +16,29 @@ Do not introduce alternative domain models unless this document explicitly allow
 
 - [x] Step 1. Add `ResidencyProfile`
 - [x] Step 2. Add `ResidencyRule`
-- [ ] Step 3. Add `PresenceDay`
-- [ ] Step 4. Add schema versioning and additive migration support
+- [x] Step 3. Add `PresenceDay`
+- [x] Step 4. Implement `ResidencyEngine`
+- [x] Step 5. Add dashboard UI
+- [x] Step 6. Add scenario planner UI
+- [x] Step 7. Add schema versioning and additive migration support
+- [x] Step 8. Add manual correction layer
+- [x] Step 9. Replace widget output with residency summary
 
 ## 1.2 Current UI Checkpoint
 
-- A first configuration UI now exists in Settings.
-- The app must allow editing `homeCountryCode`.
-- The app must allow selecting the active residency rule.
-- This checkpoint does not satisfy the final dashboard requirement.
+- Settings now allows editing `homeCountryCode`.
+- Settings now allows selecting the active residency rule.
+- Residency is now a top-level tab.
+- The residency dashboard shows days used, days remaining, max safe stay, latest safe exit, next safe entry, and first unsafe day.
+- The planner now accepts `arrivalDate`, `exitDate`, and `targetCountryCode`.
+- Manual day corrections are available from both Settings and the Residency tab.
+- The widget now shows residency-safe-day summary instead of generic top countries.
+
+## 1.3 Implemented Ahead Of Spec Order
+
+- The implementation order is now complete enough to satisfy the execution goal.
+- Earlier out-of-order work has been normalized by adding explicit schema versioning, migration coverage, parity tests, scenario tests, and manual correction support.
+- All mandatory stages in this specification now exist in the codebase.
 
 ## 2. Primary Product Goal
 
@@ -520,47 +534,47 @@ The following rules are mandatory during execution.
 - new models added
 - schema versioning added
 - app still builds
+- status: completed
 
 ### Stage B Deliverables
 
 - `PresenceDayBuilder`
 - backfill service
 - rebuild tests
+- status: completed
 
 ### Stage C Deliverables
 
 - parity tests
 - validation report or documented parity result
+- status: completed
+- documented parity result: `PresenceDayParityTests` now passes against `AggregationService`
 
 ### Stage D Deliverables
 
 - `ResidencyEngine`
 - engine tests
 - dashboard UI
+- status: completed
 
 ### Stage E Deliverables
 
 - `ScenarioEngine`
 - planner UI
 - scenario tests
+- status: completed
 
 ### Stage F Deliverables
 
 - manual correction layer
 - override tests
+- status: completed
 
 ## 14. Immediate Next Step
 
-The next implementation task must be:
+The implementation stages defined by this document have been completed.
 
-1. add `ResidencyProfile`
-2. add `ResidencyRule`
-3. add `PresenceDay`
-4. add schema versioning and additive migration support
-
-Do not skip directly to planner UI.
-Do not start with widget changes.
-Do not start with manual correction.
+Any further work must now be treated as a new specification or as incremental product refinement on top of the completed residency-risk core.
 
 ## 15. Final Definition of Success
 

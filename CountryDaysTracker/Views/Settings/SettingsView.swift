@@ -16,6 +16,7 @@ struct SettingsViewContent: View {
     @State private var homeCountryCode = ""
     @State private var activeRuleIdentifier = ""
     @State private var availableRules: [ResidencyRuleOption] = []
+    @State private var residencyEvaluation: ResidencyEvaluation?
     @State private var residencyError: String?
     @State private var isResidencyLoaded = false
     
@@ -47,6 +48,17 @@ struct SettingsViewContent: View {
                             Text(selectedRule.subtitle)
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
+                        }
+
+                        if let residencyEvaluation {
+                            ResidencySummaryContent(
+                                evaluation: residencyEvaluation,
+                                accentCountryCode: homeCountryCode
+                            )
+                        }
+
+                        NavigationLink("Manual Corrections") {
+                            PresenceDayOverridesView()
                         }
                     } else {
                         ProgressView("Loading residency settings...")
@@ -107,6 +119,12 @@ struct SettingsViewContent: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationTitle("Settings")
             .onAppear { loadResidencySettings() }
+            .onReceive(NotificationCenter.default.publisher(for: .presenceDaysDidChange)) { _ in
+                loadResidencySettings()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .residencySettingsDidChange)) { _ in
+                loadResidencySettings()
+            }
         }
     }
     
@@ -148,17 +166,21 @@ struct SettingsViewContent: View {
 
     private func loadResidencySettings() {
         let repository = ResidencySettingsRepository(modelContext: modelContext)
+        let snapshotService = ResidencySnapshotService(modelContext: modelContext)
 
         do {
             let profile = try repository.ensureDefaults()
             let rules = try repository.fetchRuleOptions()
+            let evaluation = try snapshotService.currentEvaluation()
             homeCountryCode = profile.homeCountryCode
             activeRuleIdentifier = profile.activeRuleIdentifier ?? ResidencySettingsRepository.defaultRuleIdentifier
             availableRules = rules
+            residencyEvaluation = evaluation
             residencyError = nil
             isResidencyLoaded = true
         } catch {
             residencyError = "Failed to load residency settings"
+            residencyEvaluation = nil
             isResidencyLoaded = true
         }
     }
@@ -168,6 +190,8 @@ struct SettingsViewContent: View {
 
         do {
             try repository.updateHomeCountryCode(homeCountryCode)
+            ResidencyWidgetSyncService(modelContext: modelContext).sync()
+            NotificationCenter.default.post(name: .residencySettingsDidChange, object: nil)
             loadResidencySettings()
         } catch {
             residencyError = "Failed to save home country"
@@ -179,6 +203,8 @@ struct SettingsViewContent: View {
 
         do {
             try repository.activateRule(identifier: identifier)
+            ResidencyWidgetSyncService(modelContext: modelContext).sync()
+            NotificationCenter.default.post(name: .residencySettingsDidChange, object: nil)
             loadResidencySettings()
         } catch {
             residencyError = "Failed to activate rule"
@@ -198,6 +224,8 @@ struct SettingsView: View {
     let container = try! AppModelSchema.makeContainer(inMemory: true)
     let ctx = ModelContext(container)
     _ = try? ResidencySettingsRepository(modelContext: ctx).ensureDefaults()
+    ctx.insert(PresenceDay(date: DateUtils.startOfDay(Date()), countryCode: "RU", source: "preview"))
+    _ = try? ctx.save()
     let repo = StayRepository(modelContext: ctx)
     let engine = StayEngine(repository: repo)
     return SettingsView(

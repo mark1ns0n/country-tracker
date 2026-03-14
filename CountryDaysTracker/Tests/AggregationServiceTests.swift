@@ -58,6 +58,26 @@ final class AggregationServiceTests: XCTestCase {
         XCTAssertTrue(set.contains("US") && set.contains("FR"))
     }
 
+    func testVisitedCountriesIncludesIntervalLaterOnUpperBoundDay() {
+        let calendar = Calendar(identifier: .gregorian)
+        let svc = AggregationService(calendar: calendar)
+        let day = calendar.date(from: DateComponents(year: 2026, month: 3, day: 12))!
+        let range = DateUtils.startOfDay(day, calendar: calendar)...DateUtils.startOfDay(day, calendar: calendar)
+        let intervals = [
+            StayInterval(
+                countryCode: "FR",
+                entryAt: calendar.date(byAdding: .hour, value: 10, to: day)!,
+                exitAt: calendar.date(byAdding: .hour, value: 12, to: day)!,
+                source: "test",
+                confidence: 1.0
+            )
+        ]
+
+        let set = svc.visitedCountries(range: range, intervals: intervals)
+
+        XCTAssertEqual(set, Set(["FR"]))
+    }
+
     func testDaysByCountryCountsAllCountriesOnMixedDay() {
         let calendar = Calendar(identifier: .gregorian)
         let svc = AggregationService(calendar: calendar)

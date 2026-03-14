@@ -13,17 +13,21 @@ struct RootTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
+            ResidencyDashboardView()
+                .tabItem { Label("Residency", systemImage: "house.badge.exclamationmark") }
+                .tag(0)
+
             CalendarMonthView()
                 .tabItem { Label("Calendar", systemImage: "calendar") }
-                .tag(0)
+                .tag(1)
             
             StatsView()
                 .tabItem { Label("Stats", systemImage: "chart.bar") }
-                .tag(1)
+                .tag(2)
             
             SettingsViewContent(locationService: locationService)
                 .tabItem { Label("Settings", systemImage: "gear") }
-                .tag(2)
+                .tag(3)
         }
     }
 }

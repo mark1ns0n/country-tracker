@@ -26,6 +26,26 @@
 		96C7E26641584A05AD142A32 /* ResidencyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A31 /* ResidencyRule.swift */; };
 		96C7E26641584A05AD142A34 /* ResidencySettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A33 /* ResidencySettingsRepository.swift */; };
 		96C7E26641584A05AD142A36 /* ResidencySettingsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A35 /* ResidencySettingsRepositoryTests.swift */; };
+		96C7E26641584A05AD142A38 /* PresenceDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A37 /* PresenceDay.swift */; };
+		96C7E26641584A05AD142A3A /* PresenceDayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A39 /* PresenceDayBuilder.swift */; };
+		96C7E26641584A05AD142A3C /* PresenceDayBackfillService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A3B /* PresenceDayBackfillService.swift */; };
+		96C7E26641584A05AD142A3E /* PresenceDayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A3D /* PresenceDayBuilderTests.swift */; };
+		96C7E26641584A05AD142A40 /* ResidencyEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A3F /* ResidencyEngine.swift */; };
+		96C7E26641584A05AD142A42 /* ResidencySnapshotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A41 /* ResidencySnapshotService.swift */; };
+		96C7E26641584A05AD142A44 /* ResidencyEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A43 /* ResidencyEngineTests.swift */; };
+		96C7E26641584A05AD142A46 /* ResidencyDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A45 /* ResidencyDashboardView.swift */; };
+		96C7E26641584A05AD142A48 /* ResidencySummaryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A47 /* ResidencySummaryContent.swift */; };
+		96C7E26641584A05AD142A4B /* ResidencyPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A4A /* ResidencyPlannerView.swift */; };
+		96C7E26641584A05AD142A4D /* ResidencyScenarioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A4C /* ResidencyScenarioEngine.swift */; };
+		96C7E26641584A05AD142A4F /* ResidencyScenarioEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A4E /* ResidencyScenarioEngineTests.swift */; };
+		96C7E26641584A05AD142A51 /* AppMigrationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A50 /* AppMigrationPlan.swift */; };
+		96C7E26641584A05AD142A53 /* PresenceDayOverrideRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A52 /* PresenceDayOverrideRepository.swift */; };
+		96C7E26641584A05AD142A55 /* PresenceDayOverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A54 /* PresenceDayOverridesView.swift */; };
+		96C7E26641584A05AD142A57 /* PresenceDayParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A56 /* PresenceDayParityTests.swift */; };
+		96C7E26641584A05AD142A59 /* AppMigrationPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A58 /* AppMigrationPlanTests.swift */; };
+		96C7E26641584A05AD142A5B /* ResidencyWidgetSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A5A /* ResidencyWidgetSyncService.swift */; };
+		96C7E26641584A05AD142A5D /* ResidencyWidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A5C /* ResidencyWidgetSnapshot.swift */; };
+		96C7E26641584A05AD142A5E /* ResidencyWidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7E26641584A05AD142A5C /* ResidencyWidgetSnapshot.swift */; };
 		A1B2C3D4E5F60718293A4B5E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* XCTest.framework */; };
 		A1B2C3D4E5F60718293A4B5F /* StayEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798AA18A17AAF133B035DD3 /* StayEngineTests.swift */; };
 		A1B2C3D4E5F60718293A4B60 /* AggregationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6688638C8E5669F73A265 /* AggregationServiceTests.swift */; };
@@ -86,13 +106,32 @@
 		8BB6688638C8E5669F73A265 /* AggregationServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AggregationServiceTests.swift; sourceTree = "<group>"; };
 		8C1656B24A3371D2A95CB7FF /* RootTabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		8C99FB120103C2526C108A3C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9B62B3CE198E77FB8C049B9E /* WelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		9C34B46D06F92079D94A47EE /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		96C7E26641584A05AD142A2D /* ResidencyProfile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyProfile.swift; sourceTree = "<group>"; };
 		96C7E26641584A05AD142A2F /* AppModelSchema.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppModelSchema.swift; sourceTree = "<group>"; };
 		96C7E26641584A05AD142A31 /* ResidencyRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyRule.swift; sourceTree = "<group>"; };
 		96C7E26641584A05AD142A33 /* ResidencySettingsRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencySettingsRepository.swift; sourceTree = "<group>"; };
 		96C7E26641584A05AD142A35 /* ResidencySettingsRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencySettingsRepositoryTests.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A37 /* PresenceDay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDay.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A39 /* PresenceDayBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDayBuilder.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A3B /* PresenceDayBackfillService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDayBackfillService.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A3D /* PresenceDayBuilderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDayBuilderTests.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A3F /* ResidencyEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyEngine.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A41 /* ResidencySnapshotService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencySnapshotService.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A43 /* ResidencyEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyEngineTests.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A45 /* ResidencyDashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyDashboardView.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A47 /* ResidencySummaryContent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencySummaryContent.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A4A /* ResidencyPlannerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyPlannerView.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A4C /* ResidencyScenarioEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyScenarioEngine.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A4E /* ResidencyScenarioEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyScenarioEngineTests.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A50 /* AppMigrationPlan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppMigrationPlan.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A52 /* PresenceDayOverrideRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDayOverrideRepository.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A54 /* PresenceDayOverridesView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDayOverridesView.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A56 /* PresenceDayParityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PresenceDayParityTests.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A58 /* AppMigrationPlanTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppMigrationPlanTests.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A5A /* ResidencyWidgetSyncService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyWidgetSyncService.swift; sourceTree = "<group>"; };
+		96C7E26641584A05AD142A5C /* ResidencyWidgetSnapshot.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResidencyWidgetSnapshot.swift; sourceTree = "<group>"; };
+		9B62B3CE198E77FB8C049B9E /* WelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		9C34B46D06F92079D94A47EE /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A02041774C0272978916AAA7 /* CountryDaysTrackerApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CountryDaysTrackerApp.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B5C /* CountryDaysTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryDaysTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F60718293A4B5D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
@@ -231,7 +270,12 @@
 			children = (
 				B798AA18A17AAF133B035DD3 /* StayEngineTests.swift */,
 				8BB6688638C8E5669F73A265 /* AggregationServiceTests.swift */,
+				96C7E26641584A05AD142A3D /* PresenceDayBuilderTests.swift */,
+				96C7E26641584A05AD142A56 /* PresenceDayParityTests.swift */,
+				96C7E26641584A05AD142A43 /* ResidencyEngineTests.swift */,
+				96C7E26641584A05AD142A4E /* ResidencyScenarioEngineTests.swift */,
 				96C7E26641584A05AD142A35 /* ResidencySettingsRepositoryTests.swift */,
+				96C7E26641584A05AD142A58 /* AppMigrationPlanTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -262,11 +306,20 @@
 				BF3302362EF5E79B001691C3 /* StayRepository.swift */,
 				BFD370D02EF5E9F300C78653 /* StayRepository.swift */,
 				BF31C8DD2EF47DA000EABAFB /* group.com.mark1ns0n.countrydaystrackerExtension.entitlements */,
+				96C7E26641584A05AD142A5F /* CountryDaysTrackerShared */,
 				BFF0C3552F0EE638009EDD98 /* CountryTrackerWidgetExtension */,
 				A89D055587F36B84CE7CA6F7 /* Products */,
 				83D48CF2C54F6A43AB50CF85 /* Frameworks */,
 				334F40CF80B73DDB052C1F23 /* CountryDaysTracker */,
 			);
+			sourceTree = "<group>";
+		};
+		96C7E26641584A05AD142A5F /* CountryDaysTrackerShared */ = {
+			isa = PBXGroup;
+			children = (
+				96C7E26641584A05AD142A5C /* ResidencyWidgetSnapshot.swift */,
+			);
+			path = CountryDaysTrackerShared;
 			sourceTree = "<group>";
 		};
 		8B258DB1BD27C9B2CB77B485 /* Stats */ = {
@@ -277,10 +330,23 @@
 			path = Stats;
 			sourceTree = "<group>";
 		};
+		96C7E26641584A05AD142A49 /* Residency */ = {
+			isa = PBXGroup;
+			children = (
+				96C7E26641584A05AD142A45 /* ResidencyDashboardView.swift */,
+				96C7E26641584A05AD142A54 /* PresenceDayOverridesView.swift */,
+				96C7E26641584A05AD142A4A /* ResidencyPlannerView.swift */,
+				96C7E26641584A05AD142A47 /* ResidencySummaryContent.swift */,
+			);
+			path = Residency;
+			sourceTree = "<group>";
+		};
 		9C040BA215B6BB3CD04E8402 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				96C7E26641584A05AD142A50 /* AppMigrationPlan.swift */,
 				96C7E26641584A05AD142A2F /* AppModelSchema.swift */,
+				96C7E26641584A05AD142A52 /* PresenceDayOverrideRepository.swift */,
 				96C7E26641584A05AD142A33 /* ResidencySettingsRepository.swift */,
 				C19279D08200AA02A921CED8 /* StayRepository.swift */,
 			);
@@ -297,10 +363,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AC3B6B8F0B7E47A18C6A22D1 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				96C7E26641584A05AD142A3B /* PresenceDayBackfillService.swift */,
+			);
+			path = Migration;
+			sourceTree = "<group>";
+		};
 		AD78CABC9F2452A3FAEA42E7 /* Engines */ = {
 			isa = PBXGroup;
 			children = (
 				B99D675624024E34ABA24F72 /* StayEngine.swift */,
+				96C7E26641584A05AD142A3F /* ResidencyEngine.swift */,
+				96C7E26641584A05AD142A4C /* ResidencyScenarioEngine.swift */,
 			);
 			path = Engines;
 			sourceTree = "<group>";
@@ -309,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				04296EC0F72C910E6E7775CB /* Onboarding */,
+				96C7E26641584A05AD142A49 /* Residency */,
 				328FB5B17A44B4184C7923ED /* Root */,
 				C99674721700A384CA637DFA /* Settings */,
 				4536B3D8A05907993AE08D1E /* Calendar */,
@@ -331,6 +408,7 @@
 			children = (
 				41E801724D73A78F83B34103 /* StayInterval.swift */,
 				0FF65995A88C143AB0940288 /* LocationEventLog.swift */,
+				96C7E26641584A05AD142A37 /* PresenceDay.swift */,
 				96C7E26641584A05AD142A2D /* ResidencyProfile.swift */,
 				96C7E26641584A05AD142A31 /* ResidencyRule.swift */,
 			);
@@ -343,6 +421,10 @@
 				D4653F17B6EDBACE38F4762E /* LocationService.swift */,
 				72AC5A55E99FD013A3609B2F /* DateUtils.swift */,
 				26C96B689DDFCD90322974A0 /* AggregationService.swift */,
+				96C7E26641584A05AD142A39 /* PresenceDayBuilder.swift */,
+				96C7E26641584A05AD142A41 /* ResidencySnapshotService.swift */,
+				96C7E26641584A05AD142A5A /* ResidencyWidgetSyncService.swift */,
+				AC3B6B8F0B7E47A18C6A22D1 /* Migration */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -505,6 +587,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1B2C3D4E5F60718293A4B60 /* AggregationServiceTests.swift in Sources */,
+				96C7E26641584A05AD142A59 /* AppMigrationPlanTests.swift in Sources */,
+				96C7E26641584A05AD142A3E /* PresenceDayBuilderTests.swift in Sources */,
+				96C7E26641584A05AD142A57 /* PresenceDayParityTests.swift in Sources */,
+				96C7E26641584A05AD142A44 /* ResidencyEngineTests.swift in Sources */,
+				96C7E26641584A05AD142A4F /* ResidencyScenarioEngineTests.swift in Sources */,
 				96C7E26641584A05AD142A36 /* ResidencySettingsRepositoryTests.swift in Sources */,
 				A1B2C3D4E5F60718293A4B5F /* StayEngineTests.swift in Sources */,
 			);
@@ -514,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C7E26641584A05AD142A5E /* ResidencyWidgetSnapshot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,18 +614,32 @@
 				540DE7A8D4A36CB7893A5743 /* ContentView.swift in Sources */,
 				D432E0C3513F8AB1898EA653 /* StayInterval.swift in Sources */,
 				AC9906F0F441E53B1C12A8F9 /* LocationEventLog.swift in Sources */,
+				96C7E26641584A05AD142A38 /* PresenceDay.swift in Sources */,
 				96C7E26641584A05AD142A2E /* ResidencyProfile.swift in Sources */,
 				96C7E26641584A05AD142A32 /* ResidencyRule.swift in Sources */,
 				7145A478B88C7FA5A0DA0C46 /* StayEngine.swift in Sources */,
+				96C7E26641584A05AD142A40 /* ResidencyEngine.swift in Sources */,
+				96C7E26641584A05AD142A4D /* ResidencyScenarioEngine.swift in Sources */,
 				ABCF9064D822BFCF805093C0 /* LocationService.swift in Sources */,
 				014C549EB56BAB8AADF156F3 /* WelcomeView.swift in Sources */,
 				8938D83F0A3665F486E22A74 /* LocationPermissionView.swift in Sources */,
 				0374B303902AF71D1D9B40D2 /* RootTabView.swift in Sources */,
+				96C7E26641584A05AD142A46 /* ResidencyDashboardView.swift in Sources */,
+				96C7E26641584A05AD142A55 /* PresenceDayOverridesView.swift in Sources */,
+				96C7E26641584A05AD142A4B /* ResidencyPlannerView.swift in Sources */,
+				96C7E26641584A05AD142A48 /* ResidencySummaryContent.swift in Sources */,
 				1770F6AB0C95C0A7DA533003 /* SettingsView.swift in Sources */,
 				12FF14B5F73A7FBFCB6FE014 /* DateUtils.swift in Sources */,
 				F0E1D2C3B4A5968712345679 /* StringExtensions.swift in Sources */,
 				EF1E4DC5EA7F9F7DA751DC63 /* AggregationService.swift in Sources */,
+				96C7E26641584A05AD142A3A /* PresenceDayBuilder.swift in Sources */,
+				96C7E26641584A05AD142A42 /* ResidencySnapshotService.swift in Sources */,
+				96C7E26641584A05AD142A5B /* ResidencyWidgetSyncService.swift in Sources */,
+				96C7E26641584A05AD142A3C /* PresenceDayBackfillService.swift in Sources */,
+				96C7E26641584A05AD142A51 /* AppMigrationPlan.swift in Sources */,
 				96C7E26641584A05AD142A30 /* AppModelSchema.swift in Sources */,
+				96C7E26641584A05AD142A53 /* PresenceDayOverrideRepository.swift in Sources */,
+				96C7E26641584A05AD142A5D /* ResidencyWidgetSnapshot.swift in Sources */,
 				96C7E26641584A05AD142A34 /* ResidencySettingsRepository.swift in Sources */,
 				BB7C932812378CA5D321B0F4 /* CalendarMonthView.swift in Sources */,
 				68F9E5A84DD18478EDC1300C /* DayCellView.swift in Sources */,

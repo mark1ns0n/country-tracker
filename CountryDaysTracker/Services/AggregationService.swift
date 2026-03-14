@@ -111,13 +111,7 @@ struct AggregationService {
     
     /// Get set of all visited countries in a date range
     func visitedCountries(range: ClosedRange<Date>, intervals: [StayInterval]) -> Set<String> {
-        let filtered = intervals.filter { interval in
-            // For open intervals (exitAt == nil), use current date as end
-            let intervalEnd = interval.exitAt ?? Date()
-            return interval.entryAt <= range.upperBound && intervalEnd >= range.lowerBound
-        }
-        
-        return Set(filtered.map { $0.countryCode })
+        Set(dayCountries(range: range, intervals: intervals).values.flatMap(\.self))
     }
 
     /// Map each day in range to all countries visited that day (a day can have multiple countries)

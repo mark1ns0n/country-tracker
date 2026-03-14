@@ -7,68 +7,18 @@
 
 import Foundation
 import SwiftData
-import WidgetKit
 
 extension Notification.Name {
     /// Broadcast when stay intervals are inserted or closed
     static let stayIntervalsDidChange = Notification.Name("stayIntervalsDidChange")
     static let locationLogsDidChange = Notification.Name("locationLogsDidChange")
+    static let residencySettingsDidChange = Notification.Name("residencySettingsDidChange")
+    static let presenceDaysDidChange = Notification.Name("presenceDaysDidChange")
 }
 
-struct CountryYearStats: Codable {
-    let countriesCount: Int
-    let totalDays: Int
-    let tripsCount: Int
-    let topCountries: [CountryData]
-    let lastUpdated: Date
-}
-
-struct CountryData: Codable, Identifiable {
-    let id: String
-    let code: String
-    let days: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case code
-        case days
-    }
-    
-    init(code: String, days: Int) {
-        self.id = code
-        self.code = code
-        self.days = days
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.decode(String.self, forKey: .code)
-        days = try container.decode(Int.self, forKey: .days)
-        id = code
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(code, forKey: .code)
-        try container.encode(days, forKey: .days)
-    }
-}
-
-private enum WidgetStatsDefaults {
-    static let suiteName = "group.com.mark1ns0n.countrydaystracker"
-    static let statsKey = "yearStatsWidget_v2"
-    static let intervalsKey = "yearStatsWidgetIntervals_v1"
-    static let widgetKind = "CountryTrackerWidget"
-}
-
-struct WidgetStayInterval: Codable {
-    let countryCode: String
-    let entryAt: Date
-    let exitAt: Date?
-}
-
-private actor WidgetRefreshCoordinator {
+private actor PresenceDayRefreshCoordinator {
     private var refreshTask: Task<Void, Never>?
-    
+
     func scheduleRefresh(_ operation: @escaping @Sendable () -> Void) {
         refreshTask?.cancel()
         refreshTask = Task {
@@ -82,7 +32,7 @@ private actor WidgetRefreshCoordinator {
 @MainActor
 class StayRepository {
     private let modelContext: ModelContext
-    private let widgetRefreshCoordinator = WidgetRefreshCoordinator()
+    private let presenceDayRefreshCoordinator = PresenceDayRefreshCoordinator()
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -160,13 +110,7 @@ class StayRepository {
         
         do {
             try modelContext.save()
-            Task {
-                await widgetRefreshCoordinator.scheduleRefresh { [weak self] in
-                    Task { @MainActor in
-                        self?.refreshWidgetStatsForLastYear()
-                    }
-                }
-            }
+            scheduleDerivedDataRefresh()
             NotificationCenter.default.post(name: .stayIntervalsDidChange, object: nil)
         } catch {
             print("Error inserting interval: \(error)")
@@ -185,13 +129,7 @@ class StayRepository {
                 interval.exitAt = exitAt
                 interval.updatedAt = Date()
                 try modelContext.save()
-                Task {
-                    await widgetRefreshCoordinator.scheduleRefresh { [weak self] in
-                        Task { @MainActor in
-                            self?.refreshWidgetStatsForLastYear()
-                        }
-                    }
-                }
+                scheduleDerivedDataRefresh()
                 NotificationCenter.default.post(name: .stayIntervalsDidChange, object: nil)
             }
         } catch {
@@ -246,57 +184,23 @@ class StayRepository {
         }
     }
     
-    func refreshWidgetStatsForLastYear() {
-        let range = lastYearRange()
-        let intervals = fetchIntervals(in: range)
-        let aggregation = AggregationService()
-        
-        let daysCounts = aggregation.daysByCountry(range: range, intervals: intervals)
-        let countries = aggregation.visitedCountries(range: range, intervals: intervals)
-        
-        let totalDays = aggregation.uniqueDaysWithCountry(range: range, intervals: intervals)
-        let tripsCount = intervals.filter { $0.exitAt != nil }.count
-
-        let countryData = daysCounts.map { CountryData(code: $0.key, days: $0.value) }
-        let topCountries = countryData.sorted { lhs, rhs in
-            lhs.days == rhs.days ? lhs.code < rhs.code : lhs.days > rhs.days
+    private func scheduleDerivedDataRefresh() {
+        Task {
+            await presenceDayRefreshCoordinator.scheduleRefresh { [weak self] in
+                Task { @MainActor in
+                    self?.rebuildPresenceDays()
+                }
+            }
         }
-        
-        let stats = CountryYearStats(
-            countriesCount: countries.count,
-            totalDays: totalDays,
-            tripsCount: tripsCount,
-            topCountries: topCountries,
-            lastUpdated: Date()
-        )
-
-        let widgetIntervals = intervals.map {
-            WidgetStayInterval(
-                countryCode: $0.countryCode,
-                entryAt: $0.entryAt,
-                exitAt: $0.exitAt
-            )
-        }
-
-        saveWidgetStats(stats, intervals: widgetIntervals)
     }
-    
-    private func lastYearRange() -> ClosedRange<Date> {
-        DateUtils.last365DaysRange()
-    }
-    
-    private func saveWidgetStats(_ stats: CountryYearStats, intervals: [WidgetStayInterval]) {
+
+    private func rebuildPresenceDays() {
         do {
-            let encoder = JSONEncoder()
-            let statsData = try encoder.encode(stats)
-            let intervalsData = try encoder.encode(intervals)
-
-            let defaults = UserDefaults(suiteName: WidgetStatsDefaults.suiteName)
-            defaults?.set(statsData, forKey: WidgetStatsDefaults.statsKey)
-            defaults?.set(intervalsData, forKey: WidgetStatsDefaults.intervalsKey)
-            WidgetCenter.shared.reloadTimelines(ofKind: WidgetStatsDefaults.widgetKind)
+            _ = try PresenceDayBackfillService(modelContext: modelContext).rebuildFromIntervals()
+            ResidencyWidgetSyncService(modelContext: modelContext).sync()
+            NotificationCenter.default.post(name: .presenceDaysDidChange, object: nil)
         } catch {
-            print("Failed to save widget stats: \(error)")
+            print("Failed to rebuild presence days: \(error)")
         }
     }
 }
