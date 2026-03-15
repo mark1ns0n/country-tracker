@@ -44,13 +44,11 @@ enum AppModelSchema {
             )
         }
 
+        // Use the default unnamed SwiftData configuration for the production store so the
+        // app continues reading the existing on-device `default.store` database.
         return ModelConfiguration(
-            "CountryDaysTracker",
             schema: schema,
-            isStoredInMemoryOnly: inMemory,
-            allowsSave: true,
-            groupContainer: .none,
-            cloudKitDatabase: .none
+            isStoredInMemoryOnly: inMemory
         )
     }
 }
