@@ -72,6 +72,94 @@ final class AppMigrationPlanTests: XCTestCase {
         XCTAssertEqual(presenceDays.count, 3)
     }
 
+    func testUnknownVersionCurrentStoreRecoversAndPreservesData() throws {
+        let storeURL = makeStoreURL()
+        defer { try? FileManager.default.removeItem(at: storeURL.deletingLastPathComponent()) }
+
+        let legacySchema = AppModelSchema.currentUnversionedSchema()
+        let legacyConfiguration = ModelConfiguration(
+            "CountryDaysTrackerLegacyCurrent",
+            schema: legacySchema,
+            url: storeURL,
+            allowsSave: true,
+            cloudKitDatabase: .none
+        )
+        let legacyContainer = try ModelContainer(
+            for: legacySchema,
+            configurations: [legacyConfiguration]
+        )
+        let legacyContext = ModelContext(legacyContainer)
+
+        legacyContext.insert(
+            StayInterval(
+                id: UUID(uuidString: "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA")!,
+                countryCode: "RU",
+                entryAt: Self.day("2026-01-01"),
+                exitAt: Self.day("2026-01-03"),
+                source: "legacy.current",
+                confidence: 1,
+                createdAt: Self.day("2026-01-03"),
+                updatedAt: Self.day("2026-01-03")
+            )
+        )
+        legacyContext.insert(
+            PresenceDay(
+                id: UUID(uuidString: "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB")!,
+                date: Self.day("2026-01-02"),
+                countryCode: "RU",
+                source: "manual",
+                isManualOverride: true,
+                notes: "keep me",
+                updatedAt: Self.day("2026-01-03")
+            )
+        )
+        legacyContext.insert(
+            ResidencyProfile(
+                id: UUID(uuidString: "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC")!,
+                homeCountryCode: "RU",
+                activeRuleIdentifier: "ru-183-rolling-365",
+                updatedAt: Self.day("2026-01-03")
+            )
+        )
+        legacyContext.insert(
+            ResidencyRule(
+                id: UUID(uuidString: "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD")!,
+                identifier: "ru-183-rolling-365",
+                jurisdictionCode: "RU",
+                windowLengthDays: 365,
+                thresholdDays: 183,
+                safeLimitDays: 182,
+                isEnabled: true,
+                title: "Russia: 183 days in 365-day window"
+            )
+        )
+        try legacyContext.save()
+
+        let migratedContainer = try AppModelSchema.makeContainer(
+            inMemory: false,
+            url: storeURL
+        )
+        let migratedContext = ModelContext(migratedContainer)
+
+        let intervals = try migratedContext.fetch(FetchDescriptor<StayInterval>())
+        let presenceDays = try migratedContext.fetch(FetchDescriptor<PresenceDay>())
+        let profiles = try migratedContext.fetch(FetchDescriptor<ResidencyProfile>())
+        let rules = try migratedContext.fetch(FetchDescriptor<ResidencyRule>())
+
+        XCTAssertEqual(intervals.count, 1)
+        XCTAssertEqual(intervals.first?.countryCode, "RU")
+        XCTAssertEqual(presenceDays.count, 1)
+        XCTAssertEqual(presenceDays.first?.notes, "keep me")
+        XCTAssertEqual(profiles.first?.homeCountryCode, "RU")
+        XCTAssertEqual(rules.first?.identifier, "ru-183-rolling-365")
+
+        let backupDirectories = try FileManager.default.contentsOfDirectory(
+            at: storeURL.deletingLastPathComponent().appendingPathComponent("LegacyStoreBackups"),
+            includingPropertiesForKeys: nil
+        )
+        XCTAssertFalse(backupDirectories.isEmpty)
+    }
+
     private func makeStoreURL() -> URL {
         let directory = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
