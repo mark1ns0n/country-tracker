@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import SQLite3
 import SwiftData
+
+private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
 enum AppModelSchema {
     private static let appGroupIdentifier = "group.com.mark1ns0n.countrydaystracker"
@@ -30,38 +33,33 @@ enum AppModelSchema {
             guard
                 !inMemory,
                 let storeURL = url ?? defaultPersistentStoreURL(),
-                isUnknownModelVersionError(error)
+                FileManager.default.fileExists(atPath: storeURL.path)
             else {
                 throw error
             }
 
-            try recoverUnknownVersionStore(at: storeURL)
-            return try makeVersionedContainer(
-                inMemory: false,
-                url: storeURL
-            )
+            print("⚠️ Persistent container open failed, attempting SQLite recovery: \(error)")
+
+            let snapshot = try makeSQLiteSnapshot(from: storeURL)
+
+            do {
+                try recoverUnknownVersionStore(
+                    at: storeURL,
+                    snapshot: snapshot
+                )
+                return try makeVersionedContainer(
+                    inMemory: false,
+                    url: storeURL
+                )
+            } catch {
+                print("⚠️ Persistent store recovery failed: \(error)")
+                return try makeSeededInMemoryContainer(from: snapshot)
+            }
         }
     }
 
     static func legacySchema() -> Schema {
         Schema(versionedSchema: AppSchemaV1.self)
-    }
-
-    static func currentUnversionedSchema() -> Schema {
-        Schema([
-            StayInterval.self,
-            LocationEventLog.self,
-            PresenceDay.self,
-            ResidencyProfile.self,
-            ResidencyRule.self,
-        ])
-    }
-
-    static func legacyUnversionedSchema() -> Schema {
-        Schema([
-            StayInterval.self,
-            LocationEventLog.self,
-        ])
     }
 
     private static func makeVersionedContainer(
@@ -83,6 +81,13 @@ enum AppModelSchema {
         inMemory: Bool,
         url: URL?
     ) -> ModelConfiguration {
+        if inMemory {
+            return ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: true
+            )
+        }
+
         if let url = url ?? defaultPersistentStoreURL() {
             return ModelConfiguration(
                 "CountryDaysTracker",
@@ -95,7 +100,7 @@ enum AppModelSchema {
 
         return ModelConfiguration(
             schema: schema,
-            isStoredInMemoryOnly: inMemory
+            isStoredInMemoryOnly: true
         )
     }
 
@@ -121,18 +126,10 @@ enum AppModelSchema {
         )
     }
 
-    private static func isUnknownModelVersionError(_ error: Error) -> Bool {
-        let nsError = error as NSError
-        if nsError.domain == NSCocoaErrorDomain, nsError.code == 134504 {
-            return true
-        }
-
-        let message = nsError.localizedDescription.lowercased()
-        return message.contains("unknown model version")
-    }
-
-    private static func recoverUnknownVersionStore(at storeURL: URL) throws {
-        let snapshot = try makeLegacySnapshot(from: storeURL)
+    private static func recoverUnknownVersionStore(
+        at storeURL: URL,
+        snapshot: LegacyStoreSnapshot
+    ) throws {
         try backupStoreFiles(at: storeURL)
         try removeStoreFiles(at: storeURL)
 
@@ -141,76 +138,42 @@ enum AppModelSchema {
             url: storeURL
         )
         let recoveredContext = ModelContext(recoveredContainer)
-
-        snapshot.stayIntervals.forEach { recoveredContext.insert($0.makeModel()) }
-        snapshot.locationLogs.forEach { recoveredContext.insert($0.makeModel()) }
-        snapshot.presenceDays.forEach { recoveredContext.insert($0.makeModel()) }
-        snapshot.residencyProfiles.forEach { recoveredContext.insert($0.makeModel()) }
-        snapshot.residencyRules.forEach { recoveredContext.insert($0.makeModel()) }
+        seed(snapshot: snapshot, into: recoveredContext)
 
         if recoveredContext.hasChanges {
             try recoveredContext.save()
         }
     }
 
-    private static func makeLegacySnapshot(from storeURL: URL) throws -> LegacyStoreSnapshot {
-        let legacyAttempts: [(Schema, Bool)] = [
-            (currentUnversionedSchema(), true),
-            (legacyUnversionedSchema(), false),
-        ]
-
-        var lastError: Error?
-
-        for (schema, includesResidencyModels) in legacyAttempts {
-            do {
-                let configuration = ModelConfiguration(
-                    "CountryDaysTrackerLegacyRecovery",
-                    schema: schema,
-                    url: storeURL,
-                    allowsSave: false,
-                    cloudKitDatabase: .none
-                )
-                let container = try ModelContainer(
-                    for: schema,
-                    configurations: [configuration]
-                )
-                let context = ModelContext(container)
-
-                let stayIntervals = try context.fetch(FetchDescriptor<StayInterval>())
-                    .map(LegacyStayIntervalSnapshot.init)
-                let locationLogs = try context.fetch(FetchDescriptor<LocationEventLog>())
-                    .map(LegacyLocationEventLogSnapshot.init)
-
-                if includesResidencyModels {
-                    let presenceDays = try context.fetch(FetchDescriptor<PresenceDay>())
-                        .map(LegacyPresenceDaySnapshot.init)
-                    let residencyProfiles = try context.fetch(FetchDescriptor<ResidencyProfile>())
-                        .map(LegacyResidencyProfileSnapshot.init)
-                    let residencyRules = try context.fetch(FetchDescriptor<ResidencyRule>())
-                        .map(LegacyResidencyRuleSnapshot.init)
-
-                    return LegacyStoreSnapshot(
-                        stayIntervals: stayIntervals,
-                        locationLogs: locationLogs,
-                        presenceDays: presenceDays,
-                        residencyProfiles: residencyProfiles,
-                        residencyRules: residencyRules
-                    )
-                }
-
-                return LegacyStoreSnapshot(
-                    stayIntervals: stayIntervals,
-                    locationLogs: locationLogs,
-                    presenceDays: [],
-                    residencyProfiles: [],
-                    residencyRules: []
-                )
-            } catch {
-                lastError = error
-            }
+    private static func makeSeededInMemoryContainer(
+        from snapshot: LegacyStoreSnapshot
+    ) throws -> ModelContainer {
+        let container = try makeVersionedContainer(
+            inMemory: true,
+            url: nil
+        )
+        let context = ModelContext(container)
+        seed(snapshot: snapshot, into: context)
+        if context.hasChanges {
+            try context.save()
         }
+        return container
+    }
 
-        throw lastError ?? CocoaError(.fileReadUnknown)
+    private static func makeSQLiteSnapshot(from storeURL: URL) throws -> LegacyStoreSnapshot {
+        var database: OpaquePointer?
+        guard sqlite3_open_v2(storeURL.path, &database, SQLITE_OPEN_READONLY, nil) == SQLITE_OK else {
+            throw SQLiteRecoveryError.openFailed(message: currentSQLiteErrorMessage(database))
+        }
+        defer { sqlite3_close(database) }
+
+        return LegacyStoreSnapshot(
+            stayIntervals: try readStayIntervals(from: database),
+            locationLogs: try readLocationEventLogs(from: database),
+            presenceDays: try readPresenceDays(from: database),
+            residencyProfiles: try readResidencyProfiles(from: database),
+            residencyRules: try readResidencyRules(from: database)
+        )
     }
 
     private static func backupStoreFiles(at storeURL: URL) throws {
@@ -250,6 +213,244 @@ enum AppModelSchema {
             URL(fileURLWithPath: storeURL.path + "-wal"),
         ]
     }
+
+    private static func readStayIntervals(
+        from database: OpaquePointer?
+    ) throws -> [LegacyStayIntervalSnapshot] {
+        guard try tableExists(named: "ZSTAYINTERVAL", in: database) else { return [] }
+        let statement = try prepareStatement(
+            """
+            SELECT ZID, ZCOUNTRYCODE, ZENTRYAT, ZEXITAT, ZSOURCE, ZCONFIDENCE, ZCREATEDAT, ZUPDATEDAT
+            FROM ZSTAYINTERVAL
+            """,
+            in: database
+        )
+        defer { sqlite3_finalize(statement) }
+
+        var values: [LegacyStayIntervalSnapshot] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            values.append(
+                LegacyStayIntervalSnapshot(
+                    id: try uuidValue(statement, index: 0),
+                    countryCode: stringValue(statement, index: 1) ?? "",
+                    entryAt: try dateValue(statement, index: 2),
+                    exitAt: try optionalDateValue(statement, index: 3),
+                    source: stringValue(statement, index: 4) ?? "",
+                    confidence: sqlite3_column_double(statement, 5),
+                    createdAt: try dateValue(statement, index: 6),
+                    updatedAt: try dateValue(statement, index: 7)
+                )
+            )
+        }
+        return values
+    }
+
+    private static func readLocationEventLogs(
+        from database: OpaquePointer?
+    ) throws -> [LegacyLocationEventLogSnapshot] {
+        guard try tableExists(named: "ZLOCATIONEVENTLOG", in: database) else { return [] }
+        let statement = try prepareStatement(
+            """
+            SELECT ZID, ZTIMESTAMP, ZLATITUDE, ZLONGITUDE, ZSOURCE, ZCOUNTRYCODECANDIDATE, ZACCEPTED, ZNOTE
+            FROM ZLOCATIONEVENTLOG
+            """,
+            in: database
+        )
+        defer { sqlite3_finalize(statement) }
+
+        var values: [LegacyLocationEventLogSnapshot] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            values.append(
+                LegacyLocationEventLogSnapshot(
+                    id: try uuidValue(statement, index: 0),
+                    timestamp: try dateValue(statement, index: 1),
+                    latitude: sqlite3_column_double(statement, 2),
+                    longitude: sqlite3_column_double(statement, 3),
+                    source: stringValue(statement, index: 4) ?? "",
+                    countryCodeCandidate: stringValue(statement, index: 5),
+                    accepted: sqlite3_column_int(statement, 6) != 0,
+                    note: stringValue(statement, index: 7)
+                )
+            )
+        }
+        return values
+    }
+
+    private static func readPresenceDays(
+        from database: OpaquePointer?
+    ) throws -> [LegacyPresenceDaySnapshot] {
+        guard try tableExists(named: "ZPRESENCEDAY", in: database) else { return [] }
+        let statement = try prepareStatement(
+            """
+            SELECT ZID, ZDATE, ZCOUNTRYCODE, ZSOURCE, ZISMANUALOVERRIDE, ZUPDATEDAT
+            FROM ZPRESENCEDAY
+            """,
+            in: database
+        )
+        defer { sqlite3_finalize(statement) }
+
+        var values: [LegacyPresenceDaySnapshot] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            values.append(
+                LegacyPresenceDaySnapshot(
+                    id: try uuidValue(statement, index: 0),
+                    date: try dateValue(statement, index: 1),
+                    countryCode: stringValue(statement, index: 2) ?? "",
+                    source: stringValue(statement, index: 3) ?? "",
+                    isManualOverride: sqlite3_column_int(statement, 4) != 0,
+                    notes: nil,
+                    updatedAt: try dateValue(statement, index: 5)
+                )
+            )
+        }
+        return values
+    }
+
+    private static func readResidencyProfiles(
+        from database: OpaquePointer?
+    ) throws -> [LegacyResidencyProfileSnapshot] {
+        guard try tableExists(named: "ZRESIDENCYPROFILE", in: database) else { return [] }
+        let statement = try prepareStatement(
+            """
+            SELECT ZID, ZHOMECOUNTRYCODE, ZACTIVERULEIDENTIFIER, ZUPDATEDAT
+            FROM ZRESIDENCYPROFILE
+            """,
+            in: database
+        )
+        defer { sqlite3_finalize(statement) }
+
+        var values: [LegacyResidencyProfileSnapshot] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            values.append(
+                LegacyResidencyProfileSnapshot(
+                    id: try uuidValue(statement, index: 0),
+                    homeCountryCode: stringValue(statement, index: 1) ?? "",
+                    activeRuleIdentifier: stringValue(statement, index: 2),
+                    updatedAt: try dateValue(statement, index: 3)
+                )
+            )
+        }
+        return values
+    }
+
+    private static func readResidencyRules(
+        from database: OpaquePointer?
+    ) throws -> [LegacyResidencyRuleSnapshot] {
+        guard try tableExists(named: "ZRESIDENCYRULE", in: database) else { return [] }
+        let statement = try prepareStatement(
+            """
+            SELECT ZID, ZIDENTIFIER, ZJURISDICTIONCODE, ZWINDOWKIND, ZWINDOWLENGTHDAYS, ZTHRESHOLDDAYS, ZSAFELIMITDAYS, ZISENABLED, ZTITLE
+            FROM ZRESIDENCYRULE
+            """,
+            in: database
+        )
+        defer { sqlite3_finalize(statement) }
+
+        var values: [LegacyResidencyRuleSnapshot] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            values.append(
+                LegacyResidencyRuleSnapshot(
+                    id: try uuidValue(statement, index: 0),
+                    identifier: stringValue(statement, index: 1) ?? "",
+                    jurisdictionCode: stringValue(statement, index: 2) ?? "",
+                    windowKind: stringValue(statement, index: 3) ?? "",
+                    windowLengthDays: Int(sqlite3_column_int(statement, 4)),
+                    thresholdDays: Int(sqlite3_column_int(statement, 5)),
+                    safeLimitDays: Int(sqlite3_column_int(statement, 6)),
+                    isEnabled: sqlite3_column_int(statement, 7) != 0,
+                    title: stringValue(statement, index: 8) ?? ""
+                )
+            )
+        }
+        return values
+    }
+
+    private static func tableExists(
+        named tableName: String,
+        in database: OpaquePointer?
+    ) throws -> Bool {
+        let statement = try prepareStatement(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name=? LIMIT 1",
+            in: database
+        )
+        defer { sqlite3_finalize(statement) }
+        sqlite3_bind_text(statement, 1, tableName, -1, SQLITE_TRANSIENT)
+        return sqlite3_step(statement) == SQLITE_ROW
+    }
+
+    private static func prepareStatement(
+        _ sql: String,
+        in database: OpaquePointer?
+    ) throws -> OpaquePointer? {
+        var statement: OpaquePointer?
+        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else {
+            throw SQLiteRecoveryError.statementPreparationFailed(
+                sql: sql,
+                message: currentSQLiteErrorMessage(database)
+            )
+        }
+        return statement
+    }
+
+    private static func currentSQLiteErrorMessage(_ database: OpaquePointer?) -> String {
+        guard let message = sqlite3_errmsg(database) else { return "Unknown SQLite error" }
+        return String(cString: message)
+    }
+
+    private static func stringValue(
+        _ statement: OpaquePointer?,
+        index: Int32
+    ) -> String? {
+        guard let rawValue = sqlite3_column_text(statement, index) else { return nil }
+        return String(cString: rawValue)
+    }
+
+    private static func dateValue(
+        _ statement: OpaquePointer?,
+        index: Int32
+    ) throws -> Date {
+        guard sqlite3_column_type(statement, index) != SQLITE_NULL else {
+            throw SQLiteRecoveryError.invalidDate(columnIndex: Int(index))
+        }
+        return Date(timeIntervalSinceReferenceDate: sqlite3_column_double(statement, index))
+    }
+
+    private static func optionalDateValue(
+        _ statement: OpaquePointer?,
+        index: Int32
+    ) throws -> Date? {
+        guard sqlite3_column_type(statement, index) != SQLITE_NULL else { return nil }
+        return try dateValue(statement, index: index)
+    }
+
+    private static func uuidValue(
+        _ statement: OpaquePointer?,
+        index: Int32
+    ) throws -> UUID {
+        guard
+            let bytes = sqlite3_column_blob(statement, index),
+            sqlite3_column_bytes(statement, index) == 16
+        else {
+            throw SQLiteRecoveryError.invalidUUID(columnIndex: Int(index))
+        }
+
+        var uuid: uuid_t = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        withUnsafeMutableBytes(of: &uuid) { destination in
+            destination.copyBytes(from: UnsafeRawBufferPointer(start: bytes, count: 16))
+        }
+        return UUID(uuid: uuid)
+    }
+
+    private static func seed(
+        snapshot: LegacyStoreSnapshot,
+        into context: ModelContext
+    ) {
+        snapshot.stayIntervals.forEach { context.insert($0.makeModel()) }
+        snapshot.locationLogs.forEach { context.insert($0.makeModel()) }
+        snapshot.presenceDays.forEach { context.insert($0.makeModel()) }
+        snapshot.residencyProfiles.forEach { context.insert($0.makeModel()) }
+        snapshot.residencyRules.forEach { context.insert($0.makeModel()) }
+    }
 }
 
 private struct LegacyStoreSnapshot {
@@ -269,6 +470,26 @@ private struct LegacyStayIntervalSnapshot {
     let confidence: Double
     let createdAt: Date
     let updatedAt: Date
+
+    init(
+        id: UUID,
+        countryCode: String,
+        entryAt: Date,
+        exitAt: Date?,
+        source: String,
+        confidence: Double,
+        createdAt: Date,
+        updatedAt: Date
+    ) {
+        self.id = id
+        self.countryCode = countryCode
+        self.entryAt = entryAt
+        self.exitAt = exitAt
+        self.source = source
+        self.confidence = confidence
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
 
     init(model: StayInterval) {
         id = model.id
@@ -305,6 +526,26 @@ private struct LegacyLocationEventLogSnapshot {
     let accepted: Bool
     let note: String?
 
+    init(
+        id: UUID,
+        timestamp: Date,
+        latitude: Double,
+        longitude: Double,
+        source: String,
+        countryCodeCandidate: String?,
+        accepted: Bool,
+        note: String?
+    ) {
+        self.id = id
+        self.timestamp = timestamp
+        self.latitude = latitude
+        self.longitude = longitude
+        self.source = source
+        self.countryCodeCandidate = countryCodeCandidate
+        self.accepted = accepted
+        self.note = note
+    }
+
     init(model: LocationEventLog) {
         id = model.id
         timestamp = model.timestamp
@@ -339,6 +580,24 @@ private struct LegacyPresenceDaySnapshot {
     let notes: String?
     let updatedAt: Date
 
+    init(
+        id: UUID,
+        date: Date,
+        countryCode: String,
+        source: String,
+        isManualOverride: Bool,
+        notes: String?,
+        updatedAt: Date
+    ) {
+        self.id = id
+        self.date = date
+        self.countryCode = countryCode
+        self.source = source
+        self.isManualOverride = isManualOverride
+        self.notes = notes
+        self.updatedAt = updatedAt
+    }
+
     init(model: PresenceDay) {
         id = model.id
         date = model.date
@@ -368,6 +627,18 @@ private struct LegacyResidencyProfileSnapshot {
     let activeRuleIdentifier: String?
     let updatedAt: Date
 
+    init(
+        id: UUID,
+        homeCountryCode: String,
+        activeRuleIdentifier: String?,
+        updatedAt: Date
+    ) {
+        self.id = id
+        self.homeCountryCode = homeCountryCode
+        self.activeRuleIdentifier = activeRuleIdentifier
+        self.updatedAt = updatedAt
+    }
+
     init(model: ResidencyProfile) {
         id = model.id
         homeCountryCode = model.homeCountryCode
@@ -396,6 +667,28 @@ private struct LegacyResidencyRuleSnapshot {
     let isEnabled: Bool
     let title: String
 
+    init(
+        id: UUID,
+        identifier: String,
+        jurisdictionCode: String,
+        windowKind: String,
+        windowLengthDays: Int,
+        thresholdDays: Int,
+        safeLimitDays: Int,
+        isEnabled: Bool,
+        title: String
+    ) {
+        self.id = id
+        self.identifier = identifier
+        self.jurisdictionCode = jurisdictionCode
+        self.windowKind = windowKind
+        self.windowLengthDays = windowLengthDays
+        self.thresholdDays = thresholdDays
+        self.safeLimitDays = safeLimitDays
+        self.isEnabled = isEnabled
+        self.title = title
+    }
+
     init(model: ResidencyRule) {
         id = model.id
         identifier = model.identifier
@@ -421,4 +714,11 @@ private struct LegacyResidencyRuleSnapshot {
             title: title
         )
     }
+}
+
+private enum SQLiteRecoveryError: Error {
+    case openFailed(message: String)
+    case statementPreparationFailed(sql: String, message: String)
+    case invalidUUID(columnIndex: Int)
+    case invalidDate(columnIndex: Int)
 }

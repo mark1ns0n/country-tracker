@@ -160,6 +160,44 @@ final class AppMigrationPlanTests: XCTestCase {
         XCTAssertFalse(backupDirectories.isEmpty)
     }
 
+    func testCopiedRealDeviceStoreRecovers() throws {
+        let sourceDirectory = URL(fileURLWithPath: "/tmp/country-tracker-device-store/appGroup", isDirectory: true)
+        try XCTSkipUnless(
+            FileManager.default.fileExists(atPath: sourceDirectory.appendingPathComponent("default.store").path),
+            "Real device store snapshot is not available locally."
+        )
+
+        let workingDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: workingDirectory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: workingDirectory) }
+
+        let destinationStoreURL = workingDirectory.appendingPathComponent("default.store")
+        for filename in ["default.store", "default.store-wal", "default.store-shm"] {
+            let sourceURL = sourceDirectory.appendingPathComponent(filename)
+            if FileManager.default.fileExists(atPath: sourceURL.path) {
+                try FileManager.default.copyItem(
+                    at: sourceURL,
+                    to: workingDirectory.appendingPathComponent(filename)
+                )
+            }
+        }
+
+        let migratedContainer = try AppModelSchema.makeContainer(
+            inMemory: false,
+            url: destinationStoreURL
+        )
+        let migratedContext = ModelContext(migratedContainer)
+
+        let intervals = try migratedContext.fetch(FetchDescriptor<StayInterval>())
+        let logs = try migratedContext.fetch(FetchDescriptor<LocationEventLog>())
+        let presenceDays = try migratedContext.fetch(FetchDescriptor<PresenceDay>())
+
+        XCTAssertEqual(intervals.count, 17)
+        XCTAssertEqual(logs.count, 2696)
+        XCTAssertEqual(presenceDays.count, 1468)
+    }
+
     private func makeStoreURL() -> URL {
         let directory = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
